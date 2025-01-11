@@ -9,7 +9,7 @@ class MicronautGraalWellBehavePluginSpec extends Specification {
 
         when:
         project.plugins.apply("io.micronaut.graalvm")
-        project.plugins.apply (plugin)
+        project.plugins.apply(plugin)
 
         then:
         project.configurations.annotationProcessor.dependencies.find { it.name == 'micronaut-graal' }

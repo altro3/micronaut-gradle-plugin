@@ -19,9 +19,7 @@ import org.gradle.api.tasks.TaskAction;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -33,8 +31,8 @@ import java.util.EnumSet;
 public abstract class CheckpointScriptTask extends DefaultTask {
 
     private static final EnumSet<PosixFilePermission> POSIX_FILE_PERMISSIONS = EnumSet.of(PosixFilePermission.OWNER_READ, PosixFilePermission.OWNER_WRITE, PosixFilePermission.OWNER_EXECUTE,
-            PosixFilePermission.GROUP_READ, PosixFilePermission.GROUP_WRITE, PosixFilePermission.GROUP_EXECUTE,
-            PosixFilePermission.OTHERS_READ, PosixFilePermission.OTHERS_EXECUTE);
+        PosixFilePermission.GROUP_READ, PosixFilePermission.GROUP_WRITE, PosixFilePermission.GROUP_EXECUTE,
+        PosixFilePermission.OTHERS_READ, PosixFilePermission.OTHERS_EXECUTE);
 
     @Optional
     @InputFile
@@ -61,8 +59,8 @@ public abstract class CheckpointScriptTask extends DefaultTask {
         filterSet.addFilter("READINESS", getPreCheckpointReadinessCommand().get());
 
         try (var stream = getCheckpointFile().isPresent() ?
-                Files.newInputStream(getCheckpointFile().get().getAsFile().toPath()) :
-                CheckpointScriptTask.class.getResourceAsStream("/checkpoint.sh");
+            Files.newInputStream(getCheckpointFile().get().getAsFile().toPath()) :
+            CheckpointScriptTask.class.getResourceAsStream("/checkpoint.sh");
              var bufferedReader = new BufferedReader(new InputStreamReader(stream));
              BufferedWriter writer = Files.newBufferedWriter(checkpointScriptPath, StandardCharsets.UTF_8)
         ) {
@@ -85,9 +83,9 @@ public abstract class CheckpointScriptTask extends DefaultTask {
 
         Path runScriptPath = getOutputDir().file("run.sh").get().getAsFile().toPath();
         Files.copy(
-                CheckpointScriptTask.class.getResourceAsStream("/run.sh"),
-                runScriptPath,
-                StandardCopyOption.REPLACE_EXISTING
+            CheckpointScriptTask.class.getResourceAsStream("/run.sh"),
+            runScriptPath,
+            StandardCopyOption.REPLACE_EXISTING
         );
         Files.setPosixFilePermissions(runScriptPath, POSIX_FILE_PERMISSIONS);
     }

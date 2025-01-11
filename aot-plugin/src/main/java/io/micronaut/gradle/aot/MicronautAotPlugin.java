@@ -80,33 +80,33 @@ public abstract class MicronautAotPlugin implements Plugin<Project> {
     public static final String MAIN_BINARY_NAME = "main";
 
     static final List<String> TYPES_TO_CHECK = List.of(
-            "io.reactivex.Observable",
-            "reactor.core.publisher.Flux",
-            "kotlinx.coroutines.flow.Flow",
-            "io.reactivex.rxjava3.core.Flowable",
-            "io.reactivex.rxjava3.core.Observable",
-            "io.reactivex.Single",
-            "reactor.core.publisher.Mono",
-            "io.reactivex.Maybe",
-            "io.reactivex.rxjava3.core.Single",
-            "io.reactivex.rxjava3.core.Maybe",
-            "io.reactivex.Completable",
-            "io.reactivex.rxjava3.core.Completable",
-            "io.methvin.watchservice.MacOSXListeningWatchService",
-            "io.micronaut.core.async.publisher.CompletableFuturePublisher",
-            "io.micronaut.core.async.publisher.Publishers.JustPublisher",
-            "io.micronaut.core.async.subscriber.Completable"
+        "io.reactivex.Observable",
+        "reactor.core.publisher.Flux",
+        "kotlinx.coroutines.flow.Flow",
+        "io.reactivex.rxjava3.core.Flowable",
+        "io.reactivex.rxjava3.core.Observable",
+        "io.reactivex.Single",
+        "reactor.core.publisher.Mono",
+        "io.reactivex.Maybe",
+        "io.reactivex.rxjava3.core.Single",
+        "io.reactivex.rxjava3.core.Maybe",
+        "io.reactivex.Completable",
+        "io.reactivex.rxjava3.core.Completable",
+        "io.methvin.watchservice.MacOSXListeningWatchService",
+        "io.micronaut.core.async.publisher.CompletableFuturePublisher",
+        "io.micronaut.core.async.publisher.Publishers.JustPublisher",
+        "io.micronaut.core.async.subscriber.Completable"
     );
 
     public static final List<String> SERVICE_TYPES = List.of(
-            "io.micronaut.context.env.PropertySourceLoader",
-            "io.micronaut.inject.BeanConfiguration",
-            "io.micronaut.inject.BeanDefinitionReference",
-            "io.micronaut.http.HttpRequestFactory",
-            "io.micronaut.http.HttpResponseFactory",
-            "io.micronaut.core.beans.BeanIntrospectionReference",
-            "io.micronaut.core.convert.TypeConverterRegistrar",
-            "io.micronaut.context.env.PropertyExpressionResolver"
+        "io.micronaut.context.env.PropertySourceLoader",
+        "io.micronaut.inject.BeanConfiguration",
+        "io.micronaut.inject.BeanDefinitionReference",
+        "io.micronaut.http.HttpRequestFactory",
+        "io.micronaut.http.HttpResponseFactory",
+        "io.micronaut.core.beans.BeanIntrospectionReference",
+        "io.micronaut.core.convert.TypeConverterRegistrar",
+        "io.micronaut.context.env.PropertyExpressionResolver"
     );
     public static final String AOT_APPLICATION_CLASSPATH = "aotApplicationClasspath";
     public static final String OPTIMIZED_RUNTIME_CLASSPATH_CONFIGURATION_NAME = "optimizedRuntimeClasspath";
@@ -216,7 +216,7 @@ public abstract class MicronautAotPlugin implements Plugin<Project> {
                 attrs.put("Class-Path", project.getProviders().provider(() -> {
                     var classpath = new ArrayList<String>();
                     Configuration runtimeClasspath = project.getConfigurations()
-                            .getByName(RUNTIME_CLASSPATH_CONFIGURATION_NAME);
+                        .getByName(RUNTIME_CLASSPATH_CONFIGURATION_NAME);
 
                     for (File file : runtimeClasspath) {
                         classpath.add("libs/" + file.getName());
@@ -279,10 +279,10 @@ public abstract class MicronautAotPlugin implements Plugin<Project> {
             jar.getInputs().file(prepareTask.map(MicronautAotOptimizerTask::getGeneratedOutputResourceFilter));
             jar.getArchiveClassifier().convention(runtime.getSimpleName());
             jar.from(mainJar.get().getSource(), spec -> spec.eachFile(
-                    new JarExclusionSpec(
-                            prepareTask.flatMap(MicronautAotOptimizerTask::getGeneratedOutputResourceFilter),
-                            Collections.singleton("META-INF/services/"),
-                            jar.getLogger()))
+                new JarExclusionSpec(
+                    prepareTask.flatMap(MicronautAotOptimizerTask::getGeneratedOutputResourceFilter),
+                    Collections.singleton("META-INF/services/"),
+                    jar.getLogger()))
             );
             jar.from(prepareTask.map(MicronautAotOptimizerTask::getGeneratedClassesDirectory), spec -> spec.exclude("META-INF/services/**"));
             jar.from(mergeTask);
@@ -321,11 +321,11 @@ public abstract class MicronautAotPlugin implements Plugin<Project> {
                     public void execute(Task t) {
                         if (task.getLogger().isDebugEnabled()) {
                             task.getLogger().debug(
-                                    "Running optimized entry point: {}\nClasspath:\n    {}",
-                                    task.getMainClass().get(), task.getClasspath().getFiles()
-                                            .stream()
-                                            .map(File::getName)
-                                            .collect(Collectors.joining("\n    "))
+                                "Running optimized entry point: {}\nClasspath:\n    {}",
+                                task.getMainClass().get(), task.getClasspath().getFiles()
+                                    .stream()
+                                    .map(File::getName)
+                                    .collect(Collectors.joining("\n    "))
                             );
                         }
                     }
@@ -390,9 +390,9 @@ public abstract class MicronautAotPlugin implements Plugin<Project> {
             c.getDependencies().add(project.getDependencies().create(project));
         });
         return new Configurations(
-                aotOptimizerRuntimeClasspath,
-                aotApplication,
-                aotApplicationClasspath
+            aotOptimizerRuntimeClasspath,
+            aotApplication,
+            aotApplicationClasspath
         );
     }
 
@@ -425,9 +425,9 @@ public abstract class MicronautAotPlugin implements Plugin<Project> {
                 try {
                     excludes = new HashSet<>();
                     Files.readAllLines(resourceFilter.toPath())
-                            .stream()
-                            .map(JarExclusionSpec::normalizePath)
-                            .forEach(excludes::add);
+                        .stream()
+                        .map(JarExclusionSpec::normalizePath)
+                        .forEach(excludes::add);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

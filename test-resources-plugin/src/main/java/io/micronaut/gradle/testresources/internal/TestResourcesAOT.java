@@ -46,8 +46,8 @@ public final class TestResourcesAOT {
                 props.put("service.types", props.get().get("service.types") + ",io.micronaut.testresources.core.TestResourcesResolver");
             } else {
                 props.put("service.types", Stream.concat(
-                        Stream.of("io.micronaut.testresources.core.TestResourcesResolver"),
-                        MicronautAotPlugin.SERVICE_TYPES.stream()
+                    Stream.of("io.micronaut.testresources.core.TestResourcesResolver"),
+                    MicronautAotPlugin.SERVICE_TYPES.stream()
                 ).collect(Collectors.joining(",")));
             }
         });

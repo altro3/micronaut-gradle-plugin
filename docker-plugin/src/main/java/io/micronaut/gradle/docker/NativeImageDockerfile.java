@@ -60,9 +60,9 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
     public static final String AMAZON_LINUX_BASE_IMAGE = "public.ecr.aws/amazonlinux/amazonlinux:" + DefaultVersions.AMAZONLINUX;
 
     private static final List<Integer> SUPPORTED_JAVA_VERSIONS = List.of(
-            // keep those in descending order
-            21,
-            17
+        // keep those in descending order
+        21,
+        17
     );
     private static final String ARM_ARCH = "aarch64";
     private static final String X86_64_ARCH = "x64";
@@ -194,12 +194,12 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
         getBuildStrategy().convention(DockerBuildStrategy.DEFAULT);
         getRequireGraalSdk().convention(true);
         getJdkVersion().convention(
-                javaExtension.getToolchain()
-                        .getLanguageVersion()
-                        .map(JavaLanguageVersion::asInt)
-                        .orElse(project.getProviders().provider(() -> Integer.valueOf(Jvm.current().getJavaVersion().getMajorVersion())))
-                        .map(NativeImageDockerfile::toSupportedJavaVersion)
-                        .map(String::valueOf)
+            javaExtension.getToolchain()
+                .getLanguageVersion()
+                .map(JavaLanguageVersion::asInt)
+                .orElse(project.getProviders().provider(() -> Integer.valueOf(Jvm.current().getJavaVersion().getMajorVersion())))
+                .map(NativeImageDockerfile::toSupportedJavaVersion)
+                .map(String::valueOf)
         );
         String osArch = System.getProperty("os.arch");
         getGraalArch().convention(ARM_ARCH.equals(osArch) ? ARM_ARCH : X86_64_ARCH);
@@ -218,205 +218,205 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
             getGraalReleasesUrl().zip(distributionPath, (base, path) -> base + path)
         );
         getNativeImageOptions().convention(project
-                .getTasks()
-                .named(NativeImagePlugin.NATIVE_COMPILE_TASK_NAME, BuildNativeImageTask.class)
-                .map(bniT -> {
-                    NativeImageOptions delegate = bniT.getOptions().get();
-                    return new NativeImageOptions() {
-                        @Override
-                        public String getName() {
-                            return delegate.getName();
-                        }
+            .getTasks()
+            .named(NativeImagePlugin.NATIVE_COMPILE_TASK_NAME, BuildNativeImageTask.class)
+            .map(bniT -> {
+                NativeImageOptions delegate = bniT.getOptions().get();
+                return new NativeImageOptions() {
+                    @Override
+                    public String getName() {
+                        return delegate.getName();
+                    }
 
-                        @Override
-                        public Property<String> getImageName() {
-                            return delegate.getImageName();
-                        }
+                    @Override
+                    public Property<String> getImageName() {
+                        return delegate.getImageName();
+                    }
 
-                        @Override
-                        public Property<String> getMainClass() {
-                            return delegate.getMainClass();
-                        }
+                    @Override
+                    public Property<String> getMainClass() {
+                        return delegate.getMainClass();
+                    }
 
-                        @Override
-                        public ListProperty<String> getBuildArgs() {
-                            return delegate.getBuildArgs();
-                        }
+                    @Override
+                    public ListProperty<String> getBuildArgs() {
+                        return delegate.getBuildArgs();
+                    }
 
-                        @Override
-                        public MapProperty<String, Object> getSystemProperties() {
-                            return delegate.getSystemProperties();
-                        }
+                    @Override
+                    public MapProperty<String, Object> getSystemProperties() {
+                        return delegate.getSystemProperties();
+                    }
 
-                        @Override
-                        public MapProperty<String, Object> getEnvironmentVariables() {
-                            return delegate.getEnvironmentVariables();
-                        }
+                    @Override
+                    public MapProperty<String, Object> getEnvironmentVariables() {
+                        return delegate.getEnvironmentVariables();
+                    }
 
-                        @Override
-                        public ConfigurableFileCollection getClasspath() {
-                            return delegate.getClasspath();
-                        }
+                    @Override
+                    public ConfigurableFileCollection getClasspath() {
+                        return delegate.getClasspath();
+                    }
 
-                        @Override
-                        public ListProperty<String> getJvmArgs() {
-                            return delegate.getJvmArgs();
-                        }
+                    @Override
+                    public ListProperty<String> getJvmArgs() {
+                        return delegate.getJvmArgs();
+                    }
 
-                        @Override
-                        public ListProperty<String> getRuntimeArgs() {
-                            return delegate.getRuntimeArgs();
-                        }
+                    @Override
+                    public ListProperty<String> getRuntimeArgs() {
+                        return delegate.getRuntimeArgs();
+                    }
 
-                        @Override
-                        public Property<Boolean> getDebug() {
-                            return delegate.getDebug();
-                        }
+                    @Override
+                    public Property<Boolean> getDebug() {
+                        return delegate.getDebug();
+                    }
 
-                        @Override
-                        public Property<Boolean> getFallback() {
-                            return delegate.getFallback();
-                        }
+                    @Override
+                    public Property<Boolean> getFallback() {
+                        return delegate.getFallback();
+                    }
 
-                        @Override
-                        public Property<Boolean> getVerbose() {
-                            return delegate.getVerbose();
-                        }
+                    @Override
+                    public Property<Boolean> getVerbose() {
+                        return delegate.getVerbose();
+                    }
 
-                        @Override
-                        public Property<Boolean> getQuickBuild() {
-                            return delegate.getQuickBuild();
-                        }
+                    @Override
+                    public Property<Boolean> getQuickBuild() {
+                        return delegate.getQuickBuild();
+                    }
 
-                        @Override
-                        public Property<Boolean> getRichOutput() {
-                            return delegate.getRichOutput();
-                        }
+                    @Override
+                    public Property<Boolean> getRichOutput() {
+                        return delegate.getRichOutput();
+                    }
 
-                        @Override
-                        public MapProperty<Object, List<String>> getExcludeConfig() {
-                            return delegate.getExcludeConfig();
-                        }
+                    @Override
+                    public MapProperty<Object, List<String>> getExcludeConfig() {
+                        return delegate.getExcludeConfig();
+                    }
 
-                        @Override
-                        public void agent(Action<? super DeprecatedAgentOptions> spec) {
-                            delegate.agent(spec);
-                        }
+                    @Override
+                    public void agent(Action<? super DeprecatedAgentOptions> spec) {
+                        delegate.agent(spec);
+                    }
 
-                        @Override
-                        public ListProperty<String> getExcludeConfigArgs() {
-                            return delegate.getExcludeConfigArgs();
-                        }
+                    @Override
+                    public ListProperty<String> getExcludeConfigArgs() {
+                        return delegate.getExcludeConfigArgs();
+                    }
 
-                        @Override
-                        public Property<Boolean> getSharedLibrary() {
-                            return delegate.getSharedLibrary();
-                        }
+                    @Override
+                    public Property<Boolean> getSharedLibrary() {
+                        return delegate.getSharedLibrary();
+                    }
 
-                        @Override
-                        @Optional
-                        public Property<JavaLauncher> getJavaLauncher() {
-                            // The native image docker file generator does NOT require
-                            // GraalVM nor will it use the java launcher, so we make
-                            // the property optional
-                            return getObjects().property(JavaLauncher.class);
-                        }
+                    @Override
+                    @Optional
+                    public Property<JavaLauncher> getJavaLauncher() {
+                        // The native image docker file generator does NOT require
+                        // GraalVM nor will it use the java launcher, so we make
+                        // the property optional
+                        return getObjects().property(JavaLauncher.class);
+                    }
 
-                        @Override
-                        public ConfigurableFileCollection getConfigurationFileDirectories() {
-                            return delegate.getConfigurationFileDirectories();
-                        }
+                    @Override
+                    public ConfigurableFileCollection getConfigurationFileDirectories() {
+                        return delegate.getConfigurationFileDirectories();
+                    }
 
-                        @Override
-                        public NativeResourcesOptions getResources() {
-                            return delegate.getResources();
-                        }
+                    @Override
+                    public NativeResourcesOptions getResources() {
+                        return delegate.getResources();
+                    }
 
-                        @Override
-                        public void resources(Action<? super NativeResourcesOptions> spec) {
-                            delegate.resources(spec);
-                        }
+                    @Override
+                    public void resources(Action<? super NativeResourcesOptions> spec) {
+                        delegate.resources(spec);
+                    }
 
-                        @Override
-                        public NativeImageOptions buildArgs(Object... buildArgs) {
-                            delegate.buildArgs(buildArgs);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions buildArgs(Object... buildArgs) {
+                        delegate.buildArgs(buildArgs);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions buildArgs(Iterable<?> buildArgs) {
-                            delegate.buildArgs(buildArgs);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions buildArgs(Iterable<?> buildArgs) {
+                        delegate.buildArgs(buildArgs);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions systemProperties(Map<String, ?> properties) {
-                            delegate.systemProperties(properties);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions systemProperties(Map<String, ?> properties) {
+                        delegate.systemProperties(properties);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions systemProperty(String name, Object value) {
-                            delegate.systemProperty(name, value);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions systemProperty(String name, Object value) {
+                        delegate.systemProperty(name, value);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions classpath(Object... paths) {
-                            delegate.classpath(paths);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions classpath(Object... paths) {
+                        delegate.classpath(paths);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions jvmArgs(Object... arguments) {
-                            delegate.jvmArgs(arguments);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions jvmArgs(Object... arguments) {
+                        delegate.jvmArgs(arguments);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions jvmArgs(Iterable<?> arguments) {
-                            delegate.jvmArgs(arguments);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions jvmArgs(Iterable<?> arguments) {
+                        delegate.jvmArgs(arguments);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions runtimeArgs(Object... arguments) {
-                            delegate.runtimeArgs(arguments);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions runtimeArgs(Object... arguments) {
+                        delegate.runtimeArgs(arguments);
+                        return this;
+                    }
 
-                        @Override
-                        public NativeImageOptions runtimeArgs(Iterable<?> arguments) {
-                            delegate.runtimeArgs(arguments);
-                            return this;
-                        }
+                    @Override
+                    public NativeImageOptions runtimeArgs(Iterable<?> arguments) {
+                        delegate.runtimeArgs(arguments);
+                        return this;
+                    }
 
-                        @Override
-                        public Property<Boolean> getUseFatJar() {
-                            return delegate.getUseFatJar();
-                        }
+                    @Override
+                    public Property<Boolean> getUseFatJar() {
+                        return delegate.getUseFatJar();
+                    }
 
-                        @Override
-                        public DeprecatedAgentOptions getAgent() {
-                            return delegate.getAgent();
-                        }
+                    @Override
+                    public DeprecatedAgentOptions getAgent() {
+                        return delegate.getAgent();
+                    }
 
-                        @Override
-                        public Property<String> getRequiredVersion() {
-                            return delegate.getRequiredVersion();
-                        }
+                    @Override
+                    public Property<String> getRequiredVersion() {
+                        return delegate.getRequiredVersion();
+                    }
 
-                        @Override
-                        public Property<Boolean> getPgoInstrument() {
-                            return delegate.getPgoInstrument();
-                        }
+                    @Override
+                    public Property<Boolean> getPgoInstrument() {
+                        return delegate.getPgoInstrument();
+                    }
 
-                        @Override
-                        public DirectoryProperty getPgoProfilesDirectory() {
-                            return delegate.getPgoProfilesDirectory();
-                        }
-                    };
-                })
+                    @Override
+                    public DirectoryProperty getPgoProfilesDirectory() {
+                        return delegate.getPgoProfilesDirectory();
+                    }
+                };
+            })
         );
 
         //noinspection Convert2Lambda
@@ -467,7 +467,7 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
             String fileName = "graalvm-jdk-" + jdkVersion + "_linux-" + graalArch + "_bin.tar.gz";
             String graalvmDistributionUrl = getGraalVMDistributionUrl().get();
             runCommand("curl -4 -L " + graalvmDistributionUrl + " -o /tmp/" + fileName);
-            runCommand("tar -zxf /tmp/" + fileName + " -C /tmp && ls -d /tmp/graalvm-jdk-"+ jdkVersion + "* | grep -v \"tar.gz\" | xargs -I_ mv _ /usr/lib/graalvm");
+            runCommand("tar -zxf /tmp/" + fileName + " -C /tmp && ls -d /tmp/graalvm-jdk-" + jdkVersion + "* | grep -v \"tar.gz\" | xargs -I_ mv _ /usr/lib/graalvm");
             runCommand("rm -rf /tmp/*");
             if (toMajorVersion(jdkVersion) < 21) {
                 // The GraalVM Updater was removed in GraalVM for JDK 21
@@ -488,27 +488,27 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
         String workDir = getTargetWorkingDirectory().get();
         runCommand("mkdir " + workDir + "/config-dirs");
         getInstructions().addAll(getNativeImageOptions().map(options -> {
-                    var namer = new DockerResourceConfigDirectoryNamer();
-                    return options.getConfigurationFileDirectories()
-                            .getFiles()
-                            .stream()
-                            .filter(java.io.File::exists)
-                            .map(dir -> {
-                                String dirName = namer.determineNameFor(dir);
-                                return new RunCommandInstruction("mkdir -p " + workDir + "/config-dirs/" + dirName);
-                            })
-                            .toList();
-                }
+                var namer = new DockerResourceConfigDirectoryNamer();
+                return options.getConfigurationFileDirectories()
+                    .getFiles()
+                    .stream()
+                    .filter(java.io.File::exists)
+                    .map(dir -> {
+                        String dirName = namer.determineNameFor(dir);
+                        return new RunCommandInstruction("mkdir -p " + workDir + "/config-dirs/" + dirName);
+                    })
+                    .toList();
+            }
         ));
         getInstructions().addAll(getNativeImageOptions().map(options -> {
-                    var namer = new DockerResourceConfigDirectoryNamer();
-                    return options.getConfigurationFileDirectories()
-                            .getFiles()
-                            .stream()
-                            .filter(java.io.File::exists)
-                            .map(dir -> toCopyResourceDirectoryInstruction(dir, namer))
-                            .toList();
-                }
+                var namer = new DockerResourceConfigDirectoryNamer();
+                return options.getConfigurationFileDirectories()
+                    .getFiles()
+                    .stream()
+                    .filter(java.io.File::exists)
+                    .map(dir -> toCopyResourceDirectoryInstruction(dir, namer))
+                    .toList();
+            }
         ));
         runCommand(getProviders().provider(() -> String.join(" ", buildActualCommandLine(executable, buildStrategy, imageResolver))));
         switch (buildStrategy) {
@@ -568,8 +568,8 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
     private CopyFileInstruction toCopyResourceDirectoryInstruction(java.io.File resourceDirectory, DockerResourceConfigDirectoryNamer namer) {
         String relativePath = namer.determineNameFor(resourceDirectory).replace(java.io.File.separatorChar, '/');
         return new CopyFileInstruction(new CopyFile(
-                "config-dirs/" + relativePath,
-                getTargetWorkingDirectory().get() + "/config-dirs/" + relativePath
+            "config-dirs/" + relativePath,
+            getTargetWorkingDirectory().get() + "/config-dirs/" + relativePath
         ));
     }
 
@@ -612,28 +612,28 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
 
     private List<String> buildNativeImageCommandLineArgs(Provider<String> executable, NativeImageOptions options) {
         List<String> args = new NativeImageCommandLineProvider(
-                getProviders().provider(() -> options),
-                executable,
-                getObjects().property(String.class),
-                getObjects().property(String.class),
-                getObjects().fileProperty(),
-                getProviders().provider(() -> false), // in a docker container we don't use the @arg file
-                getObjects().property(Integer.class).value(getJdkVersion().map(NativeImageDockerfile::toMajorVersion)),
-                getProviders().provider(() -> false) // in a docker container we don't use color output
+            getProviders().provider(() -> options),
+            executable,
+            getObjects().property(String.class),
+            getObjects().property(String.class),
+            getObjects().fileProperty(),
+            getProviders().provider(() -> false), // in a docker container we don't use the @arg file
+            getObjects().property(Integer.class).value(getJdkVersion().map(NativeImageDockerfile::toMajorVersion)),
+            getProviders().provider(() -> false) // in a docker container we don't use color output
         ).asArguments();
         if (System.getProperty("os.name").toLowerCase().contains("windows")) {
             // This is a dirty workaround for https://github.com/micronaut-projects/micronaut-gradle-plugin/issues/358
             String current = getLayout().getProjectDirectory().dir(".").getAsFile().toPath().toAbsolutePath().toString();
             args = args.stream()
-                    .map(arg -> {
-                        if (arg.contains(current)) {
-                            return arg.replace(current, "")
-                                    .replace(java.io.File.separatorChar, '/')
-                                    .replace(";", ":");
-                        }
-                        return arg;
-                    })
-                    .toList();
+                .map(arg -> {
+                    if (arg.contains(current)) {
+                        return arg.replace(current, "")
+                            .replace(java.io.File.separatorChar, '/')
+                            .replace(";", ":");
+                    }
+                    return arg;
+                })
+                .toList();
         }
         return args;
     }
@@ -662,18 +662,18 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
         options.getRichOutput().set(false);
         var namer = new DockerResourceConfigDirectoryNamer();
         Provider<List<String>> remappedConfigDirectories = originalOptions.map(orig -> orig.getConfigurationFileDirectories()
-                .getFiles()
-                .stream()
-                .map(f -> getTargetWorkingDirectory().get() + "/config-dirs/" + namer.determineNameFor(f))
-                .toList()
+            .getFiles()
+            .stream()
+            .map(f -> getTargetWorkingDirectory().get() + "/config-dirs/" + namer.determineNameFor(f))
+            .toList()
         );
         options.getConfigurationFileDirectories().setFrom(
-                remappedConfigDirectories
+            remappedConfigDirectories
         );
         options.getClasspath().from(
-                getTargetWorkingDirectory().map(d -> d + "/libs/*.jar"),
-                getTargetWorkingDirectory().map(d -> d + "/resources"),
-                getTargetWorkingDirectory().map(d -> d + "/application.jar")
+            getTargetWorkingDirectory().map(d -> d + "/libs/*.jar"),
+            getTargetWorkingDirectory().map(d -> d + "/resources"),
+            getTargetWorkingDirectory().map(d -> d + "/application.jar")
         );
         options.getImageName().set("application");
     }
@@ -704,11 +704,11 @@ public abstract class NativeImageDockerfile extends Dockerfile implements Docker
 
     private NativeImageOptions newNativeImageOptions(String name) {
         return getObjects().newInstance(BaseNativeImageOptions.class,
-                name,
-                getObjects(),
-                getProviders(),
-                getJavaToolchainService(),
-                "application");
+            name,
+            getObjects(),
+            getProviders(),
+            getJavaToolchainService(),
+            "application");
     }
 
     /**

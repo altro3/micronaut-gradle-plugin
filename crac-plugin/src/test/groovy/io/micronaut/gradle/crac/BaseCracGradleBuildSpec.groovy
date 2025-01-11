@@ -4,7 +4,7 @@ import io.micronaut.gradle.AbstractGradleBuildSpec
 
 abstract class BaseCracGradleBuildSpec extends AbstractGradleBuildSpec {
 
-    File writeGroovyFile(String fileName,String content) {
+    File writeGroovyFile(String fileName, String content) {
         writeFile(fileName, content)
     }
 
@@ -75,7 +75,7 @@ abstract class BaseCracGradleBuildSpec extends AbstractGradleBuildSpec {
                     incremental(true)
                     annotations("example.*")
                 }
-${cracConfig.readLines().collect {"                ${it}"}.join("\n")}
+${cracConfig.readLines().collect { "                ${it}" }.join("\n")}
             }""".stripIndent()
     }
 

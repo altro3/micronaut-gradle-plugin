@@ -31,7 +31,7 @@ public class RichVersionParser {
         }
         if (idx > 0) {
             String strictly = version.substring(0, idx);
-            String prefer = version.substring(idx+2);
+            String prefer = version.substring(idx + 2);
             return new RichVersion(null, strictly, prefer, null, false);
         }
         return new RichVersion(version, null, null, null, false);

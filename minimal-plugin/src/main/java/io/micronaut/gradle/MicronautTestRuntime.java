@@ -1,11 +1,11 @@
 package io.micronaut.gradle;
 
+import org.gradle.api.plugins.JavaPlugin;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import org.gradle.api.plugins.JavaPlugin;
 
 /**
  * An enum with the different supported test runtimes.
@@ -18,54 +18,54 @@ public enum MicronautTestRuntime {
      * JUnit 5.
      */
     JUNIT_5(MicronautExtension.mapOf(
-            JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-            List.of("org.junit.jupiter:junit-jupiter-api", "io.micronaut.test:micronaut-test-junit5"),
-            JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,
-            Collections.singletonList("org.junit.jupiter:junit-jupiter-engine")
+        JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
+        List.of("org.junit.jupiter:junit-jupiter-api", "io.micronaut.test:micronaut-test-junit5"),
+        JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,
+        Collections.singletonList("org.junit.jupiter:junit-jupiter-engine")
     ), true),
     /**
      * Spock 2.
      */
     SPOCK_2(MicronautExtension.mapOf(
-            JavaPlugin.TEST_COMPILE_ONLY_CONFIGURATION_NAME,
-            Collections.singletonList("io.micronaut:micronaut-inject-groovy"),
-            JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-            List.of(
-                    "org.spockframework:spock-core",
-                    "io.micronaut.test:micronaut-test-spock",
-                    "org.apache.groovy:groovy"
-            )
+        JavaPlugin.TEST_COMPILE_ONLY_CONFIGURATION_NAME,
+        Collections.singletonList("io.micronaut:micronaut-inject-groovy"),
+        JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
+        List.of(
+            "org.spockframework:spock-core",
+            "io.micronaut.test:micronaut-test-spock",
+            "org.apache.groovy:groovy"
+        )
     ), true),
     /**
      * Kotest 4.
      */
     KOTEST_4(MicronautExtension.mapOf(
-            MicronautKotlinSupport.KOTLIN_PROCESSORS,
-            Collections.singletonList("io.micronaut:micronaut-inject-java"),
-            JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-            List.of(
-                    "io.mockk:mockk",
-                    "io.micronaut.test:micronaut-test-kotest",
-                    "io.kotest:kotest-assertions-core-jvm"
-            ),
-            JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,
-            Collections.singletonList("io.kotest:kotest-runner-junit5-jvm")
+        MicronautKotlinSupport.KOTLIN_PROCESSORS,
+        Collections.singletonList("io.micronaut:micronaut-inject-java"),
+        JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
+        List.of(
+            "io.mockk:mockk",
+            "io.micronaut.test:micronaut-test-kotest",
+            "io.kotest:kotest-assertions-core-jvm"
+        ),
+        JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,
+        Collections.singletonList("io.kotest:kotest-runner-junit5-jvm")
     ), true),
 
     /**
      * Kotest 5.
      */
     KOTEST_5(MicronautExtension.mapOf(
-            MicronautKotlinSupport.KOTLIN_PROCESSORS,
-            Collections.singletonList("io.micronaut:micronaut-inject-java"),
-            JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
-            List.of(
-                    "io.mockk:mockk",
-                    "io.micronaut.test:micronaut-test-kotest5",
-                    "io.kotest:kotest-assertions-core-jvm"
-            ),
-            JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,
-            Collections.singletonList("io.kotest:kotest-runner-junit5-jvm")
+        MicronautKotlinSupport.KOTLIN_PROCESSORS,
+        Collections.singletonList("io.micronaut:micronaut-inject-java"),
+        JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME,
+        List.of(
+            "io.mockk:mockk",
+            "io.micronaut.test:micronaut-test-kotest5",
+            "io.kotest:kotest-assertions-core-jvm"
+        ),
+        JavaPlugin.TEST_RUNTIME_ONLY_CONFIGURATION_NAME,
+        Collections.singletonList("io.kotest:kotest-runner-junit5-jvm")
     ), true),
     /**
      * No test runtime.

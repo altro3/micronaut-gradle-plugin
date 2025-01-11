@@ -1,6 +1,10 @@
 package io.micronaut.gradle
 
 import io.micronaut.gradle.graalvm.GraalUtil
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.BuildTask
 import org.gradle.testkit.runner.GradleRunner
@@ -9,11 +13,6 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 import spock.util.environment.Jvm
-
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
 
 abstract class AbstractGradleBuildSpec extends Specification {
     static boolean isGraalVmAvailable() {

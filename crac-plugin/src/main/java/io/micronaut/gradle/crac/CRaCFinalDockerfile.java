@@ -47,8 +47,8 @@ public abstract class CRaCFinalDockerfile extends MicronautDockerfile {
             Path source = getCustomFinalDockerfile().get().getAsFile().toPath();
             try {
                 Files.copy(
-                        source,
-                        getDestFile().get().getAsFile().toPath()
+                    source,
+                    getDestFile().get().getAsFile().toPath()
                 );
                 getProject().getLogger().lifecycle("Dockerfile copied from {} to {}", source, getDestFile().get().getAsFile().getAbsolutePath());
                 return;

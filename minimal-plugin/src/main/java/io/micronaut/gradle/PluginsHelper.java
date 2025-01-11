@@ -61,47 +61,47 @@ public abstract class PluginsHelper {
     public static final ConfigurableVersionProperty VALIDATION_VERSION_PROPERTY = ConfigurableVersionProperty.of("validation");
 
     private static final Map<String, AutomaticDependency> GROUP_TO_PROCESSOR_MAP = Map.of(
-            "io.micronaut.data", new AutomaticDependency(null, "io.micronaut.data:micronaut-data-processor", Optional.of(DATA_VERSION_PROPERTY)),
-            "io.micronaut.jaxrs", new AutomaticDependency(null, "io.micronaut.jaxrs:micronaut-jaxrs-processor", Optional.of(JAXRS_VERSION_PROPERTY)),
-            "io.micronaut.micrometer", new AutomaticDependency(null, "io.micronaut.micrometer:micronaut-micrometer-annotation", Optional.of(MICROMETER_VERSION_PROPERTY)),
-            "io.micronaut.microstream", new AutomaticDependency(null, "io.micronaut.microstream:micronaut-microstream-annotations", Optional.of(MICROSTREAM_VERSION_PROPERTY)),
-            "io.micronaut.openapi", new AutomaticDependency(null, "io.micronaut.openapi:micronaut-openapi", Optional.of(OPENAPI_VERSION_PROPERTY)),
-            "io.micronaut.security", new AutomaticDependency(null, "io.micronaut.security:micronaut-security-annotations", Optional.of(SECURITY_VERSION_PROPERTY)),
-            "io.micronaut.serde", new AutomaticDependency(null, "io.micronaut.serde:micronaut-serde-processor", Optional.of(SERDE_VERSION_PROPERTY)),
-            "io.micronaut.spring", new AutomaticDependency(null, "io.micronaut.spring:micronaut-spring-annotation", Optional.of(SPRING_VERSION_PROPERTY)),
-            "io.micronaut.tracing", new AutomaticDependency(null, "io.micronaut.tracing:micronaut-tracing-annotation", Optional.of(TRACING_VERSION_PROPERTY)),
-            "io.micronaut.validation", new AutomaticDependency(null, "io.micronaut.validation:micronaut-validation-processor", Optional.of(VALIDATION_VERSION_PROPERTY))
+        "io.micronaut.data", new AutomaticDependency(null, "io.micronaut.data:micronaut-data-processor", Optional.of(DATA_VERSION_PROPERTY)),
+        "io.micronaut.jaxrs", new AutomaticDependency(null, "io.micronaut.jaxrs:micronaut-jaxrs-processor", Optional.of(JAXRS_VERSION_PROPERTY)),
+        "io.micronaut.micrometer", new AutomaticDependency(null, "io.micronaut.micrometer:micronaut-micrometer-annotation", Optional.of(MICROMETER_VERSION_PROPERTY)),
+        "io.micronaut.microstream", new AutomaticDependency(null, "io.micronaut.microstream:micronaut-microstream-annotations", Optional.of(MICROSTREAM_VERSION_PROPERTY)),
+        "io.micronaut.openapi", new AutomaticDependency(null, "io.micronaut.openapi:micronaut-openapi", Optional.of(OPENAPI_VERSION_PROPERTY)),
+        "io.micronaut.security", new AutomaticDependency(null, "io.micronaut.security:micronaut-security-annotations", Optional.of(SECURITY_VERSION_PROPERTY)),
+        "io.micronaut.serde", new AutomaticDependency(null, "io.micronaut.serde:micronaut-serde-processor", Optional.of(SERDE_VERSION_PROPERTY)),
+        "io.micronaut.spring", new AutomaticDependency(null, "io.micronaut.spring:micronaut-spring-annotation", Optional.of(SPRING_VERSION_PROPERTY)),
+        "io.micronaut.tracing", new AutomaticDependency(null, "io.micronaut.tracing:micronaut-tracing-annotation", Optional.of(TRACING_VERSION_PROPERTY)),
+        "io.micronaut.validation", new AutomaticDependency(null, "io.micronaut.validation:micronaut-validation-processor", Optional.of(VALIDATION_VERSION_PROPERTY))
     );
     public static final String MICRONAUT_VERSION_PROPERTY = "micronautVersion";
     public static final String MICRONAUT_PLATFORM_ALIAS = "micronaut.platform";
     public static final String MICRONAUT_ALIAS = "micronaut";
 
     public static final List<ConfigurableVersionProperty> KNOWN_VERSION_PROPERTIES = List.of(
-            CORE_VERSION_PROPERTY,
-            DATA_VERSION_PROPERTY,
-            JAXRS_VERSION_PROPERTY,
-            MICROMETER_VERSION_PROPERTY,
-            MICROSTREAM_VERSION_PROPERTY,
-            OPENAPI_VERSION_PROPERTY,
-            SECURITY_VERSION_PROPERTY,
-            SERDE_VERSION_PROPERTY,
-            SPRING_VERSION_PROPERTY,
-            TRACING_VERSION_PROPERTY,
-            VALIDATION_VERSION_PROPERTY
+        CORE_VERSION_PROPERTY,
+        DATA_VERSION_PROPERTY,
+        JAXRS_VERSION_PROPERTY,
+        MICROMETER_VERSION_PROPERTY,
+        MICROSTREAM_VERSION_PROPERTY,
+        OPENAPI_VERSION_PROPERTY,
+        SECURITY_VERSION_PROPERTY,
+        SERDE_VERSION_PROPERTY,
+        SPRING_VERSION_PROPERTY,
+        TRACING_VERSION_PROPERTY,
+        VALIDATION_VERSION_PROPERTY
     );
 
     private PluginsHelper() {
     }
 
-    public static void maybeAddMicronautPlaformBom(Project p, Configuration configuration) {
+    public static void maybeAddMicronautPlatformBom(Project p, Configuration configuration) {
         MicronautExtension micronautExtension = p.getExtensions().findByType(MicronautExtension.class);
         configuration.getDependencies().addAllLater(
-                micronautExtension.getImportMicronautPlatform().zip(PluginsHelper.findMicronautVersion(p), (usePlatform, version) -> {
-                    if (Boolean.TRUE.equals(usePlatform)) {
-                        return List.of(resolveMicronautPlatform(p.getDependencies(), version));
-                    }
-                    return Collections.emptyList();
-                })
+            micronautExtension.getImportMicronautPlatform().zip(PluginsHelper.findMicronautVersion(p), (usePlatform, version) -> {
+                if (Boolean.TRUE.equals(usePlatform)) {
+                    return List.of(resolveMicronautPlatform(p.getDependencies(), version));
+                }
+                return Collections.emptyList();
+            })
         );
     }
 
@@ -127,7 +127,7 @@ public abstract class PluginsHelper {
                 if (mn.isPresent()) {
                     VersionCatalog versionCatalog = mn.get();
                     Optional<VersionConstraint> vc = versionCatalog.findVersion(MICRONAUT_PLATFORM_ALIAS)
-                            .or(() -> versionCatalog.findVersion(MICRONAUT_ALIAS));
+                        .or(() -> versionCatalog.findVersion(MICRONAUT_ALIAS));
                     if (vc.isPresent()) {
                         return vc.get().getRequiredVersion();
                     }
@@ -139,11 +139,11 @@ public abstract class PluginsHelper {
 
     public static Provider<String> findMicronautVersion(Project p) {
         return findMicronautExtension(p)
-                .getVersion()
-                .orElse(findVersionFromVersionCatalog(p))
-                .orElse(findVersionFromGradleProperties(p))
-                .orElse(findVersionFromProjectProperties(p))
-                .orElse(failAboutMissingMicronautVersion(p));
+            .getVersion()
+            .orElse(findVersionFromVersionCatalog(p))
+            .orElse(findVersionFromGradleProperties(p))
+            .orElse(findVersionFromProjectProperties(p))
+            .orElse(failAboutMissingMicronautVersion(p));
     }
 
     private static Provider<String> failAboutMissingMicronautVersion(Project p) {
@@ -165,14 +165,14 @@ public abstract class PluginsHelper {
     }
 
     static void configureAnnotationProcessors(
-            Project project,
-            String implementationScope,
-            String annotationProcessorConfiguration) {
+        Project project,
+        String implementationScope,
+        String annotationProcessorConfiguration) {
         registerAnnotationProcessors(project, annotationProcessorConfiguration);
         new AutomaticDependency(
-                implementationScope,
-                "io.micronaut:micronaut-inject",
-                Optional.of(CORE_VERSION_PROPERTY)
+            implementationScope,
+            "io.micronaut:micronaut-inject",
+            Optional.of(CORE_VERSION_PROPERTY)
         ).applyTo(project);
     }
 
@@ -184,9 +184,9 @@ public abstract class PluginsHelper {
         for (String annotationProcessorModule : annotationProcessorModules) {
             for (String annotationProcessingConfiguration : annotationProcessingConfigurations) {
                 new AutomaticDependency(
-                        annotationProcessingConfiguration,
-                        "io.micronaut:micronaut-" + annotationProcessorModule,
-                        Optional.of(CORE_VERSION_PROPERTY)
+                    annotationProcessingConfiguration,
+                    "io.micronaut:micronaut-" + annotationProcessorModule,
+                    Optional.of(CORE_VERSION_PROPERTY)
                 ).applyTo(p);
             }
         }
@@ -194,8 +194,8 @@ public abstract class PluginsHelper {
 
     static Optional<File> findGroovySrcDir(SourceSet groovySourceSet) {
         Optional<File> groovySrc = groovySourceSet.getAllJava().getSrcDirs()
-                .stream().filter(f -> f.getName().endsWith("groovy"))
-                .findFirst();
+            .stream().filter(f -> f.getName().endsWith("groovy"))
+            .findFirst();
         return groovySrc.flatMap(file -> {
             if (file.exists()) {
                 return Optional.of(file);
@@ -209,7 +209,7 @@ public abstract class PluginsHelper {
             // Need to do in an afterEvaluate because this will add dependencies only if the user didn't do it
             project.afterEvaluate(p -> {
                 final DependencySet allDependencies = project.getConfigurations().getByName(config)
-                        .getAllDependencies();
+                    .getAllDependencies();
                 for (var entry : GROUP_TO_PROCESSOR_MAP.entrySet()) {
                     boolean hasDep = !allDependencies.matching(dependency -> Objects.equals(dependency.getGroup(), entry.getKey())).isEmpty();
                     if (hasDep) {

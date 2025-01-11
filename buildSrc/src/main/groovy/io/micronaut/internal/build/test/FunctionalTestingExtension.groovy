@@ -1,12 +1,10 @@
-
 package io.micronaut.internal.build.test
 
+import javax.inject.Inject
 import org.gradle.api.artifacts.ProjectDependency
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.SetProperty
-
-import javax.inject.Inject
 
 abstract class FunctionalTestingExtension {
     @Inject

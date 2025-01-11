@@ -28,17 +28,17 @@ import org.codehaus.groovy.runtime.StringGroovyMethods;
  * @param gradlePropertyName the name of the gradle property
  */
 public record ConfigurableVersionProperty(
-        String name,
-        String dslName,
-        String gradlePropertyName,
-        String platformCatalogName
+    String name,
+    String dslName,
+    String gradlePropertyName,
+    String platformCatalogName
 ) {
     public static ConfigurableVersionProperty of(String name) {
         return new ConfigurableVersionProperty(
-                name,
-                name + "Version",
-                "micronaut" + StringGroovyMethods.capitalize(name) + "Version",
-                "micronaut." + name
+            name,
+            name + "Version",
+            "micronaut" + StringGroovyMethods.capitalize(name) + "Version",
+            "micronaut." + name
         );
     }
 

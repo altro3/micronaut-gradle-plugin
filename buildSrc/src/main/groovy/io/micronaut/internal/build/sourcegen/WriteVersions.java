@@ -47,7 +47,7 @@ public abstract class WriteVersions extends DefaultTask {
         File outputFile = getOutputDirectory().file(getPackageName().map(pkg -> pkg.replace('.', '/') + "/DefaultVersions.java")).get().getAsFile();
         Path parentPath = outputFile.getParentFile().toPath();
         if (Files.isDirectory(parentPath) || Files.createDirectories(parentPath) != null) {
-            try (PrintWriter prn = new PrintWriter(new FileWriter(outputFile))) {
+            try (var prn = new PrintWriter(new FileWriter(outputFile))) {
                 prn.println("package " + getPackageName().get() + ";\n");
                 prn.println();
                 prn.println("/**");
@@ -55,7 +55,7 @@ public abstract class WriteVersions extends DefaultTask {
                 prn.println(" */");
                 prn.println("public class DefaultVersions {");
                 for (Map.Entry<String, String> entry : getVersions().get().entrySet()) {
-                    var module = entry.getKey().toUpperCase(Locale.US).replace('-', '_');
+                    var module = entry.getKey().toUpperCase(Locale.ENGLISH).replace('-', '_');
                     var version = entry.getValue();
                     prn.println("    public static final String " + module + " = \"" + version + "\";");
                 }

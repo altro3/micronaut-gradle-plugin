@@ -26,7 +26,7 @@ class AotOptimizerConfigurationSpec extends Specification {
         project.dependencies.add("aotApplicationClasspath", "io.micronaut.platform:micronaut-platform:$micronautVersion")
 
         when:
-        def t = project.tasks.getByName("prepareJitOptimizations").execute()
+        def t = project.tasks.named("prepareJitOptimizations").execute()
 
         then:
         Exception ex = thrown()

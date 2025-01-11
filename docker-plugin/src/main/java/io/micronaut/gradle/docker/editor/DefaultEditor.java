@@ -134,11 +134,11 @@ public class DefaultEditor implements Editor {
     ) {
 
         public Optional<Integer> getStart() {
-                return Optional.ofNullable(start);
-            }
+            return Optional.ofNullable(start);
+        }
 
         public Optional<Integer> getEnd() {
-                return Optional.ofNullable(end);
-            }
+            return Optional.ofNullable(end);
+        }
     }
 }

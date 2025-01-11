@@ -32,7 +32,7 @@ public interface AnnotationProcessingConfigBuilder {
      * @param annotations The annotation patterns
      * @return This builder
      */
-    AnnotationProcessingConfigBuilder annotations(String...annotations);
+    AnnotationProcessingConfigBuilder annotations(String... annotations);
 
     /**
      * Additional source sets to apply processing to.

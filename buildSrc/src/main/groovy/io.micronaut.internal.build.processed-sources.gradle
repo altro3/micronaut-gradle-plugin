@@ -8,7 +8,7 @@ def processSources = tasks.register("processJavaSources", io.micronaut.internal.
     templates = file("src/templates/java")
     outputDirectory = layout.buildDirectory.dir("generated-sources/templates/java")
     catalog.versionAliases.each { alias ->
-        replacements.put("%${alias.replace('.','_').toUpperCase()}_VERSION%", catalog.findVersion(alias).get().requiredVersion)
+        replacements.put("%${alias.replace('.', '_').toUpperCase()}_VERSION%", catalog.findVersion(alias).get().requiredVersion)
     }
 }
 

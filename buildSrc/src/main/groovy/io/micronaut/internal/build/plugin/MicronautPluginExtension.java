@@ -31,7 +31,7 @@ public abstract class MicronautPluginExtension {
 
     public void register(String alias, String pluginClass, String description) {
         String[] parts = alias.split("\\.");
-        for (int i=1; i<parts.length; i++) {
+        for (int i = 1; i < parts.length; i++) {
             parts[i] = StringGroovyMethods.capitalize(parts[i]);
         }
         String prettyName = String.join("", parts) + "Plugin";

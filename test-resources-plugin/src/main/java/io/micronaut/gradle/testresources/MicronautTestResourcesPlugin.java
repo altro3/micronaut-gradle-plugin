@@ -137,9 +137,9 @@ public class MicronautTestResourcesPlugin implements Plugin<Project> {
         Provider<Boolean> isStandalone = config.getSharedServer().zip(providers.provider(() -> {
             boolean singleTask = project.getGradle().getStartParameter().getTaskNames().size() == 1;
             boolean onlyStartTask = project.getGradle().getTaskGraph()
-                    .getAllTasks()
-                    .stream()
-                    .anyMatch(task -> task.getProject().equals(project) && task.getName().equals(START_TEST_RESOURCES_SERVICE));
+                .getAllTasks()
+                .stream()
+                .anyMatch(task -> task.getProject().equals(project) && task.getName().equals(START_TEST_RESOURCES_SERVICE));
             return singleTask && onlyStartTask;
         }), (shared, singleTask) -> shared || singleTask);
         Provider<Directory> cdsDir = buildDirectory.dir("test-resources/cds");
@@ -190,11 +190,11 @@ public class MicronautTestResourcesPlugin implements Plugin<Project> {
         // action would otherwise be executed before the configuration of the task in
         // the init script which IDEA uses, overwriting our classpath
         project.afterEvaluate(unused ->
-                project.getTasks().withType(JavaExec.class).configureEach(javaExec -> {
-                    if (javaExec.getName().endsWith(IDEA_RUN_TASK_SUFFIX)) {
-                        javaExec.setClasspath(javaExec.getClasspath().plus(project.getConfigurations().getByName("developmentOnly")));
-                    }
-                })
+            project.getTasks().withType(JavaExec.class).configureEach(javaExec -> {
+                if (javaExec.getName().endsWith(IDEA_RUN_TASK_SUFFIX)) {
+                    javaExec.setClasspath(javaExec.getClasspath().plus(project.getConfigurations().getByName("developmentOnly")));
+                }
+            })
         );
     }
 
@@ -280,16 +280,16 @@ public class MicronautTestResourcesPlugin implements Plugin<Project> {
         testResources.getInferClasspath().convention(true);
         testResources.getClientTimeout().convention(DEFAULT_CLIENT_TIMEOUT_SECONDS);
         testResources.getSharedServer().convention(
-                providers.gradleProperty("shared.test.resources")
-                        .orElse(providers.systemProperty("shared.test.resources"))
-                        .orElse(providers.environmentVariable("SHARED_TEST_RESOURCES"))
-                        .orElse("false")
-                        .map(str -> {
-                            if (str.isEmpty()) {
-                                return true;
-                            }
-                            return Boolean.parseBoolean(str);
-                        })
+            providers.gradleProperty("shared.test.resources")
+                .orElse(providers.systemProperty("shared.test.resources"))
+                .orElse(providers.environmentVariable("SHARED_TEST_RESOURCES"))
+                .orElse("false")
+                .map(str -> {
+                    if (str.isEmpty()) {
+                        return true;
+                    }
+                    return Boolean.parseBoolean(str);
+                })
         );
         testResources.getSharedServerNamespace().convention(providers.environmentVariable("SHARED_TEST_RESOURCES_NAMESPACE"));
         return testResources;
@@ -303,25 +303,25 @@ public class MicronautTestResourcesPlugin implements Plugin<Project> {
             List<MavenDependency> mavenDependencies = Collections.emptyList();
             if (Boolean.TRUE.equals(infer)) {
                 mavenDependencies = project.getConfigurations().getByName("runtimeClasspath")
-                        .getAllDependencies()
-                        .stream()
-                        .filter(ModuleDependency.class::isInstance)
-                        .map(ModuleDependency.class::cast)
-                        .map(d -> new MavenDependency(d.getGroup(), d.getName(), d.getVersion()))
-                        .toList();
+                    .getAllDependencies()
+                    .stream()
+                    .filter(ModuleDependency.class::isInstance)
+                    .map(ModuleDependency.class::cast)
+                    .map(d -> new MavenDependency(d.getGroup(), d.getName(), d.getVersion()))
+                    .toList();
             }
             String testResourcesVersion = config.getVersion().get();
             assertMinimalVersion(testResourcesVersion);
             return concat(concat(
-                            TestResourcesClasspath.inferTestResourcesClasspath(mavenDependencies, testResourcesVersion)
-                                    .stream()
-                                    .map(Object::toString),
-                            config.getAdditionalModules().getOrElse(Collections.emptyList())
-                                    .stream()
-                                    .map(m -> "io.micronaut.testresources:micronaut-test-resources-" + m + ":" + testResourcesVersion))
-                            .map(dependencies::create),
-                    Stream.of(dependencies.create(testResourcesSourceSet.getRuntimeClasspath())))
-                    .toList();
+                    TestResourcesClasspath.inferTestResourcesClasspath(mavenDependencies, testResourcesVersion)
+                        .stream()
+                        .map(Object::toString),
+                    config.getAdditionalModules().getOrElse(Collections.emptyList())
+                        .stream()
+                        .map(m -> "io.micronaut.testresources:micronaut-test-resources-" + m + ":" + testResourcesVersion))
+                    .map(dependencies::create),
+                Stream.of(dependencies.create(testResourcesSourceSet.getRuntimeClasspath())))
+                .toList();
         }).orElse(Collections.emptyList());
     }
 
@@ -350,10 +350,10 @@ public class MicronautTestResourcesPlugin implements Plugin<Project> {
             version = version.substring(0, index);
         }
         return Arrays.stream(version.split("\\."))
-                .map(String::trim)
-                .map(s -> s.replaceAll("\\D", ""))
-                .map(Integer::parseInt)
-                .collect(Collectors.toCollection(ArrayList::new));
+            .map(String::trim)
+            .map(s -> s.replaceAll("\\D", ""))
+            .map(Integer::parseInt)
+            .collect(Collectors.toCollection(ArrayList::new));
     }
 
     private void configureServiceReset(ProjectInternal project,
@@ -392,7 +392,7 @@ public class MicronautTestResourcesPlugin implements Plugin<Project> {
     private static Configuration createTestResourcesServerConfiguration(Project project) {
         ConfigurationContainer configurations = project.getConfigurations();
         Configuration boms = configurations.findByName(MICRONAUT_BOMS_CONFIGURATION);
-        PluginsHelper.maybeAddMicronautPlaformBom(project, boms);
+        PluginsHelper.maybeAddMicronautPlatformBom(project, boms);
         return configurations.create(TESTRESOURCES_CONFIGURATION, conf -> {
             conf.extendsFrom(boms);
             conf.setDescription("Dependencies for the Micronaut test resources service");

@@ -1,6 +1,9 @@
 package io.micronaut.internal.build.docs
 
 import groovy.transform.CompileStatic
+import java.nio.file.Path
+import java.util.regex.Pattern
+import javax.inject.Inject
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.file.DirectoryProperty
@@ -14,10 +17,6 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
-import javax.inject.Inject
-import java.nio.file.Path
-import java.util.regex.Pattern
-
 @CompileStatic
 @CacheableTask
 abstract class Themer extends DefaultTask {
@@ -28,7 +27,7 @@ abstract class Themer extends DefaultTask {
 <div id="toctitle">Table of Contents</div>
 '''
 
-    private static final String CONTENT_START ='''\
+    private static final String CONTENT_START = '''\
 </div>
 </div>
 <div id="content">
@@ -54,7 +53,7 @@ abstract class Themer extends DefaultTask {
         String template = getTemplate().get().asFile.getText('utf-8')
         Path asciidocRoot = asciidocHtml.get().asFile.toPath()
         File outputDirRoot = outputDirectory.get().asFile
-        asciidocHtml.asFileTree.each {file ->
+        asciidocHtml.asFileTree.each { file ->
             String relativePath = asciidocRoot.relativize(file.toPath())
             fileOperations.mkdir(new File(outputDirRoot, relativePath).parentFile)
             if (file.getName().endsWith(".html")) {

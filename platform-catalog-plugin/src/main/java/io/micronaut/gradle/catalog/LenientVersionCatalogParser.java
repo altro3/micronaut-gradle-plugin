@@ -70,9 +70,9 @@ public class LenientVersionCatalogParser {
             return;
         }
         List<String> keys = librariesTable.keySet()
-                .stream()
-                .sorted(Comparator.comparing(String::length))
-                .toList();
+            .stream()
+            .sorted(Comparator.comparing(String::length))
+            .toList();
         for (String alias : keys) {
             parseLibrary(alias, librariesTable, strictVersionParser);
         }
@@ -83,9 +83,9 @@ public class LenientVersionCatalogParser {
             return;
         }
         List<String> keys = versionsTable.keySet()
-                .stream()
-                .sorted(Comparator.comparing(String::length))
-                .toList();
+            .stream()
+            .sorted(Comparator.comparing(String::length))
+            .toList();
         for (String alias : keys) {
             parseVersion(alias, versionsTable, strictVersionParser);
         }
@@ -126,11 +126,11 @@ public class LenientVersionCatalogParser {
                 RichVersion rich = strictVersionParser.parse(version);
                 var versionModel = new VersionModel(null, rich, position);
                 model.addLibrary(new Library(
-                        alias,
-                        group,
-                        name,
-                        versionModel,
-                        position
+                    alias,
+                    group,
+                    name,
+                    versionModel,
+                    position
                 ));
                 return;
             }
@@ -157,15 +157,15 @@ public class LenientVersionCatalogParser {
             String strictly = versionTable.getString("strictly");
             TomlArray rejectedArray = expectArray(versionTable, "reject");
             List<String> rejectedVersions = rejectedArray != null ? rejectedArray.toList().stream()
-                    .map(String::valueOf)
-                    .toList() : null;
+                .map(String::valueOf)
+                .toList() : null;
             Boolean rejectAll = expectBoolean(versionTable, "rejectAll");
             versionModel = new VersionModel(versionRef, versionRef == null ? new RichVersion(
-                    require,
-                    strictly,
-                    prefer,
-                    rejectedVersions,
-                    rejectAll != null ? rejectAll : false
+                require,
+                strictly,
+                prefer,
+                rejectedVersions,
+                rejectAll != null ? rejectAll : false
             ) : null, position);
         }
         if (versionModel != null) {
@@ -191,15 +191,15 @@ public class LenientVersionCatalogParser {
             strictly = versionTable.getString("strictly");
             TomlArray rejectedArray = expectArray(versionTable, "reject");
             rejectedVersions = rejectedArray != null ? rejectedArray.toList().stream()
-                    .map(String::valueOf)
-                    .toList() : null;
+                .map(String::valueOf)
+                .toList() : null;
             rejectAll = expectBoolean(versionTable, "rejectAll");
             model.addVersion(new VersionModel(alias, new RichVersion(
-                    require,
-                    strictly,
-                    prefer,
-                    rejectedVersions,
-                    rejectAll != null ? rejectAll : false
+                require,
+                strictly,
+                prefer,
+                rejectedVersions,
+                rejectAll != null ? rejectAll : false
             ), position));
         }
     }

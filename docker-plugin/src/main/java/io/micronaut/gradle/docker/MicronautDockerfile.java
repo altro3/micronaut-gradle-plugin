@@ -69,12 +69,12 @@ public abstract class MicronautDockerfile extends Dockerfile implements DockerBu
         setDescription("Builds a Docker File for a Micronaut application");
         ObjectFactory objects = project.getObjects();
         this.buildStrategy = objects.property(DockerBuildStrategy.class)
-                                    .convention(DockerBuildStrategy.DEFAULT);
+            .convention(DockerBuildStrategy.DEFAULT);
         this.baseImage = objects.property(String.class).convention("none");
         this.defaultCommand = objects.property(String.class).convention("none");
         this.args = objects.listProperty(String.class);
         this.exposedPorts = objects.listProperty(Integer.class)
-                    .convention(Collections.singletonList(8080));
+            .convention(Collections.singletonList(8080));
         this.targetWorkingDirectory = objects.property(String.class).convention(DEFAULT_WORKING_DIR);
         JavaPluginExtension javaExtension = PluginsHelper.javaPluginExtensionOf(project);
         getJdkVersion().convention(javaExtension.getTargetCompatibility());

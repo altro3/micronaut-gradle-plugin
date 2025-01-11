@@ -53,8 +53,8 @@ import static org.gradle.api.plugins.JavaPlugin.TEST_COMPILE_ONLY_CONFIGURATION_
  */
 public class MicronautComponentPlugin implements Plugin<Project> {
     private static final List<String> SOURCESETS = List.of(
-            SourceSet.MAIN_SOURCE_SET_NAME,
-            SourceSet.TEST_SOURCE_SET_NAME
+        SourceSet.MAIN_SOURCE_SET_NAME,
+        SourceSet.TEST_SOURCE_SET_NAME
     );
     private static final Set<String> CONFIGURATIONS_TO_APPLY_BOMS = Set.of(
         ANNOTATION_PROCESSOR_CONFIGURATION_NAME,
@@ -109,9 +109,9 @@ public class MicronautComponentPlugin implements Plugin<Project> {
             });
 
             PluginsHelper.applyAdditionalProcessors(
-                    p,
-                    ANNOTATION_PROCESSOR_CONFIGURATION_NAME,
-                    TEST_ANNOTATION_PROCESSOR_CONFIGURATION_NAME
+                p,
+                ANNOTATION_PROCESSOR_CONFIGURATION_NAME,
+                TEST_ANNOTATION_PROCESSOR_CONFIGURATION_NAME
             );
         });
 
@@ -120,7 +120,7 @@ public class MicronautComponentPlugin implements Plugin<Project> {
 
     private void configureMicronautBom(Project project, MicronautExtension micronautExtension) {
         Configuration micronautBoms = project.getConfigurations().getByName(MICRONAUT_BOMS_CONFIGURATION);
-        PluginsHelper.maybeAddMicronautPlaformBom(project, micronautBoms);
+        PluginsHelper.maybeAddMicronautPlatformBom(project, micronautBoms);
         var registry = project.getExtensions().getByType(SourceSetConfigurerRegistry.class);
         var knownSourceSets = new HashSet<SourceSet>();
         registry.register(sourceSet -> {
@@ -134,7 +134,7 @@ public class MicronautComponentPlugin implements Plugin<Project> {
                 }
             });
             var additionalSourceSets =
-                    micronautExtension.getProcessing().getAdditionalSourceSets();
+                micronautExtension.getProcessing().getAdditionalSourceSets();
             if (additionalSourceSets.isPresent()) {
                 List<SourceSet> configurations = additionalSourceSets.get();
                 if (!configurations.isEmpty()) {
@@ -151,12 +151,12 @@ public class MicronautComponentPlugin implements Plugin<Project> {
 
     private static void configureSourceSet(Project project, SourceSet sourceSet, Configuration micronautBoms) {
         String annotationProcessorConfigurationName = sourceSet
-                .getAnnotationProcessorConfigurationName();
+            .getAnnotationProcessorConfigurationName();
         String implementationConfigurationName = sourceSet
-                .getImplementationConfigurationName();
+            .getImplementationConfigurationName();
         List<String> both = List.of(
-                implementationConfigurationName,
-                annotationProcessorConfigurationName
+            implementationConfigurationName,
+            annotationProcessorConfigurationName
         );
         for (String configuration : both) {
             Configuration conf = project.getConfigurations().findByName(configuration);
@@ -165,8 +165,8 @@ public class MicronautComponentPlugin implements Plugin<Project> {
             }
         }
         configureAnnotationProcessors(project,
-                implementationConfigurationName,
-                annotationProcessorConfigurationName);
+            implementationConfigurationName,
+            annotationProcessorConfigurationName);
     }
 
 
@@ -188,12 +188,12 @@ public class MicronautComponentPlugin implements Plugin<Project> {
                     }
 
                     String annotationProcessorConfigurationName =
-                            sourceSet.getAnnotationProcessorConfigurationName();
+                        sourceSet.getAnnotationProcessorConfigurationName();
 
                     configureAnnotationProcessors(
-                            project,
-                            implementationScope,
-                            annotationProcessorConfigurationName
+                        project,
+                        implementationScope,
+                        annotationProcessorConfigurationName
                     );
                 }
             }
@@ -234,16 +234,16 @@ public class MicronautComponentPlugin implements Plugin<Project> {
             tasks.withType(GroovyCompile.class).configureEach(groovyCompile -> groovyCompile.getGroovyOptions().setParameters(true));
             var javaPluginExtension = PluginsHelper.javaPluginExtensionOf(project);
             configureDefaultGroovySourceSet(
-                    project,
-                    javaPluginExtension,
-                    COMPILE_ONLY_CONFIGURATION_NAME,
-                    "main"
+                project,
+                javaPluginExtension,
+                COMPILE_ONLY_CONFIGURATION_NAME,
+                "main"
             );
             configureDefaultGroovySourceSet(
-                    project,
-                    javaPluginExtension,
-                    TEST_COMPILE_ONLY_CONFIGURATION_NAME,
-                    "test"
+                project,
+                javaPluginExtension,
+                TEST_COMPILE_ONLY_CONFIGURATION_NAME,
+                "test"
             );
             project.afterEvaluate(p -> {
                 DependencyHandler dependencyHandler = project.getDependencies();
@@ -255,8 +255,8 @@ public class MicronautComponentPlugin implements Plugin<Project> {
                         Optional<File> groovySrcDir = findGroovySrcDir(sourceSet);
                         if (groovySrcDir.isPresent()) {
                             dependencyHandler.add(
-                                    configName,
-                                    "io.micronaut:micronaut-inject-groovy"
+                                configName,
+                                "io.micronaut:micronaut-inject-groovy"
                             );
                         }
                     }
@@ -270,8 +270,8 @@ public class MicronautComponentPlugin implements Plugin<Project> {
                         Optional<File> groovySrcDir = findGroovySrcDir(sourceSet);
                         if (groovySrcDir.isPresent()) {
                             dependencyHandler.add(
-                                    configName,
-                                    "io.micronaut:micronaut-inject-groovy"
+                                configName,
+                                "io.micronaut:micronaut-inject-groovy"
                             );
                             PluginsHelper.applyAdditionalProcessors(project, configName);
                         }

@@ -89,7 +89,7 @@ public class MicronautMinimalApplicationPlugin implements Plugin<Project> {
             if (javaExec.getName().equals("run")) {
                 javaExec.dependsOn(tasks.named(MicronautComponentPlugin.INSPECT_RUNTIME_CLASSPATH_TASK_NAME));
                 javaExec.jvmArgs(
-                        "-Dcom.sun.management.jmxremote"
+                    "-Dcom.sun.management.jmxremote"
                 );
                 if (!GraalUtil.isGraalJVM()) {
                     // graal doesn't support this
@@ -121,15 +121,15 @@ public class MicronautMinimalApplicationPlugin implements Plugin<Project> {
                         @Override
                         public void execute(Task workaroundEagerSystemProps) {
                             String watchPaths = sourceDirectories
-                                    .getFiles()
-                                    .stream()
-                                    .map(File::getPath)
-                                    .collect(Collectors.joining(","));
+                                .getFiles()
+                                .stream()
+                                .map(File::getPath)
+                                .collect(Collectors.joining(","));
                             javaExec.systemProperty("micronaut.io.watch.paths", watchPaths);
                         }
                     });
                     javaExec.systemProperties(
-                            sysProps
+                        sysProps
                     );
                 }
             }
@@ -177,12 +177,12 @@ public class MicronautMinimalApplicationPlugin implements Plugin<Project> {
             MicronautRuntime micronautRuntime = resolveRuntime(p);
             DependencyHandler dependencyHandler = p.getDependencies();
             MicronautRuntimeDependencies.findApplicationPluginDependenciesByRuntime(micronautRuntime)
-                    .toMap()
-                    .forEach((scope, dependencies) -> {
-                for (AutomaticDependency dependency : dependencies) {
-                    dependency.applyTo(project);
-                }
-            });
+                .toMap()
+                .forEach((scope, dependencies) -> {
+                    for (AutomaticDependency dependency : dependencies) {
+                        dependency.applyTo(project);
+                    }
+                });
             if (micronautRuntime == MicronautRuntime.GOOGLE_FUNCTION) {
                 configureGoogleCloudFunctionRuntime(project, p, dependencyHandler);
             }
@@ -203,17 +203,17 @@ public class MicronautMinimalApplicationPlugin implements Plugin<Project> {
             run.getMainClass().set("com.google.cloud.functions.invoker.runner.Invoker");
             run.setClasspath(ic);
             run.setArgs(List.of(
-                    "--target", "io.micronaut.gcp.function.http.HttpFunction",
-                    "--port", 8080
+                "--target", "io.micronaut.gcp.function.http.HttpFunction",
+                "--port", 8080
             ));
             SourceSet sourceSet = PluginsHelper.findSourceSets(p).getByName("main");
             SourceSetOutput output = sourceSet.getOutput();
             String runtimeClasspath = project.files(project.getConfigurations().getByName("runtimeClasspath"),
-                    output
+                output
             ).getAsPath();
             run.doFirst(t -> {
                 ((JavaExec) t).args("--classpath",
-                        runtimeClasspath
+                    runtimeClasspath
                 );
             });
         });

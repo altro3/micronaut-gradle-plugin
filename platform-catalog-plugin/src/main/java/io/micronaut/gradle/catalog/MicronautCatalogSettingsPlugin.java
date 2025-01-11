@@ -48,35 +48,35 @@ public abstract class MicronautCatalogSettingsPlugin implements Plugin<Settings>
 
     private static void registerMicronautVersionCatalog(Settings settings, Provider<String> micronautVersionProvider) {
         settings.getGradle().settingsEvaluated(unused ->
-                settings.dependencyResolutionManagement(drm -> {
-                            String micronautVersion = micronautVersionProvider.get();
-                            if (drm.getRepositories().isEmpty()) {
-                                drm.getRepositories().mavenCentral();
-                                if (micronautVersion.endsWith("-SNAPSHOT")) {
-                                    drm.getRepositories().maven(repo -> {
-                                        repo.setName("Micronaut Snapshots");
-                                        repo.setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/");
-                                    });
-                                }
-                            }
-                            drm.versionCatalogs(vcs -> {
-                                vcs.create("mn", catalog -> catalog.from("io.micronaut.platform:micronaut-platform:" + micronautVersion));
-                                vcs.configureEach(catalog -> {
-                                    var catalogOverrideFile = new File(settings.getSettingsDir(), "gradle/" + catalog.getName() + "-" + OVERRIDE_VERSIONS_TOML_FILE);
-                                    if (catalogOverrideFile.exists()) {
-                                        var parser = new LenientVersionCatalogParser();
-                                        try (var in = new FileInputStream(catalogOverrideFile)) {
-                                            parser.parse(in);
-                                            VersionCatalogTomlModel model = parser.getModel();
-                                            fixupMicronautCatalogWith(catalog, model);
-                                        } catch (IOException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                    }
-                                });
+            settings.dependencyResolutionManagement(drm -> {
+                    String micronautVersion = micronautVersionProvider.get();
+                    if (drm.getRepositories().isEmpty()) {
+                        drm.getRepositories().mavenCentral();
+                        if (micronautVersion.endsWith("-SNAPSHOT")) {
+                            drm.getRepositories().maven(repo -> {
+                                repo.setName("Micronaut Snapshots");
+                                repo.setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/");
                             });
                         }
-                ));
+                    }
+                    drm.versionCatalogs(vcs -> {
+                        vcs.create("mn", catalog -> catalog.from("io.micronaut.platform:micronaut-platform:" + micronautVersion));
+                        vcs.configureEach(catalog -> {
+                            var catalogOverrideFile = new File(settings.getSettingsDir(), "gradle/" + catalog.getName() + "-" + OVERRIDE_VERSIONS_TOML_FILE);
+                            if (catalogOverrideFile.exists()) {
+                                var parser = new LenientVersionCatalogParser();
+                                try (var in = new FileInputStream(catalogOverrideFile)) {
+                                    parser.parse(in);
+                                    VersionCatalogTomlModel model = parser.getModel();
+                                    fixupMicronautCatalogWith(catalog, model);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        });
+                    });
+                }
+            ));
     }
 
     private static void fixupMicronautCatalogWith(VersionCatalogBuilder catalog,
@@ -117,31 +117,31 @@ public abstract class MicronautCatalogSettingsPlugin implements Plugin<Settings>
 
     private Provider<String> createMicronautVersionProvider(Settings settings, ProviderFactory providers) {
         return providers.gradleProperty("micronautVersion")
-                .orElse(readFromVersionCatalog(settings))
-                .orElse(providers.provider(() -> {
-                    throw new IllegalStateException("Micronaut version must either be declared in `gradle.properties`, in `gradle/libs.versions.toml`");
-                }));
+            .orElse(readFromVersionCatalog(settings))
+            .orElse(providers.provider(() -> {
+                throw new IllegalStateException("Micronaut version must either be declared in `gradle.properties`, in `gradle/libs.versions.toml`");
+            }));
     }
 
     private Provider<String> readFromVersionCatalog(Settings settings) {
         ProviderFactory providers = settings.getProviders();
         var catalogFile = new File(settings.getSettingsDir(), "gradle/libs.versions.toml");
         return providers.fileContents(getDefaultGradleVersionCatalogFile().fileValue(catalogFile))
-                .getAsBytes()
-                .map(libsFile -> {
-                    try {
-                        TomlParseResult toml = Toml.parse(new ByteArrayInputStream(libsFile));
-                        TomlTable versions = toml.getTable("versions");
-                        if (versions != null) {
-                            Object micronaut = versions.get("micronaut");
-                            if (micronaut instanceof String micronautVer) {
-                                return micronautVer;
-                            }
+            .getAsBytes()
+            .map(libsFile -> {
+                try {
+                    TomlParseResult toml = Toml.parse(new ByteArrayInputStream(libsFile));
+                    TomlTable versions = toml.getTable("versions");
+                    if (versions != null) {
+                        Object micronaut = versions.get("micronaut");
+                        if (micronaut instanceof String micronautVer) {
+                            return micronautVer;
                         }
-                        return null;
-                    } catch (IOException e) {
-                        return null;
                     }
-                });
+                    return null;
+                } catch (IOException e) {
+                    return null;
+                }
+            });
     }
 }

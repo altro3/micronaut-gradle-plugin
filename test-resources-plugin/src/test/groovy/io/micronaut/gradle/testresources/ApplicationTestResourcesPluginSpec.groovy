@@ -71,7 +71,7 @@ class ApplicationTestResourcesPluginSpec extends AbstractGradleBuildSpec {
 
     def "passes using explicit configuration"() {
         withSample("test-resources/data-mysql")
-        
+
         withTestResourcesConfiguration """
             inferClasspath = false
             additionalModules.addAll(JDBC_MYSQL, KAFKA)

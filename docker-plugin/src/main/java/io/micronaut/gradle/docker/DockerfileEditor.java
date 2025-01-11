@@ -39,7 +39,7 @@ public abstract class DockerfileEditor {
         try {
             Path dockerFile = task.getDestFile().get().getAsFile().toPath();
             List<String> lines = Files.readAllLines(
-                    dockerFile
+                dockerFile
             );
             DefaultEditor editor = objects.newInstance(DefaultEditor.class, objects, Optional.empty(), lines, Optional.empty(), Optional.empty());
             actions.forEach(tweak -> tweak.execute(editor));

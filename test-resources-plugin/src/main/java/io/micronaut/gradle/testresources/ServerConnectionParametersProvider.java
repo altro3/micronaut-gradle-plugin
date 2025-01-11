@@ -60,9 +60,9 @@ public class ServerConnectionParametersProvider implements CommandLineArgumentPr
                 throw new UncheckedIOException(e);
             }
             return props.keySet()
-                    .stream()
-                    .map(key -> "-Dmicronaut.test.resources." + key + "=" + props.getProperty(key.toString()))
-                    .toList();
+                .stream()
+                .map(key -> "-Dmicronaut.test.resources." + key + "=" + props.getProperty(key.toString()))
+                .toList();
         }
         return Collections.emptyList();
     }

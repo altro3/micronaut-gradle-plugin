@@ -55,14 +55,14 @@ public class MicronautTestResourcesConsumerPlugin implements Plugin<Project> {
         pluginManager.apply(MicronautBasePlugin.class);
         Configuration testResourcesConfiguration = createTestResourcesExtension(project);
         pluginManager.withPlugin("io.micronaut.component", unused ->
-                project.afterEvaluate(p -> p.getConfigurations().all(cnf -> configureDependencies(testResourcesConfiguration, cnf)))
+            project.afterEvaluate(p -> p.getConfigurations().all(cnf -> configureDependencies(testResourcesConfiguration, cnf)))
         );
     }
 
     private Configuration createTestResourcesExtension(Project project) {
         ConfigurationContainer configurations = project.getConfigurations();
         Configuration boms = configurations.findByName(MICRONAUT_BOMS_CONFIGURATION);
-        PluginsHelper.maybeAddMicronautPlaformBom(project, boms);
+        PluginsHelper.maybeAddMicronautPlatformBom(project, boms);
         var testResourcesConfiguration = project.getConfigurations().create(MicronautTestResourcesPlugin.TESTRESOURCES_CONFIGURATION, conf -> {
             conf.extendsFrom(boms);
             conf.setCanBeConsumed(false);
@@ -87,12 +87,12 @@ public class MicronautTestResourcesConsumerPlugin implements Plugin<Project> {
         });
         var jvmArgumentsConfiguration = createJvmArgsProvider(copyServerConfiguration);
         project.getTasks().withType(Test.class).configureEach(t ->
-                t.getJvmArgumentProviders().add(jvmArgumentsConfiguration)
+            t.getJvmArgumentProviders().add(jvmArgumentsConfiguration)
         );
         project.getPlugins().withId("java-application", unused ->
-                project.getTasks().named("run", JavaExec.class, t ->
-                        t.getJvmArgumentProviders().add(jvmArgumentsConfiguration)
-                )
+            project.getTasks().named("run", JavaExec.class, t ->
+                t.getJvmArgumentProviders().add(jvmArgumentsConfiguration)
+            )
         );
         return testResourcesConfiguration;
     }

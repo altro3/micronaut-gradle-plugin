@@ -42,10 +42,10 @@ public class MicronautGraalPlugin implements Plugin<Project> {
 
     private static final Set<String> SOURCE_SETS = Set.of("main", "test");
     private static final List<String> GRAALVM_MODULE_EXPORTS = List.of(
-            "org.graalvm.nativeimage.builder/com.oracle.svm.core.configure",
-            "org.graalvm.nativeimage.builder/com.oracle.svm.core.jdk",
-            "org.graalvm.nativeimage.builder/com.oracle.svm.core.jni",
-            "org.graalvm.sdk/org.graalvm.nativeimage.impl"
+        "org.graalvm.nativeimage.builder/com.oracle.svm.core.configure",
+        "org.graalvm.nativeimage.builder/com.oracle.svm.core.jdk",
+        "org.graalvm.nativeimage.builder/com.oracle.svm.core.jni",
+        "org.graalvm.sdk/org.graalvm.nativeimage.impl"
     );
 
     @Override
@@ -68,17 +68,17 @@ public class MicronautGraalPlugin implements Plugin<Project> {
         });
         GraalVMExtension graal = project.getExtensions().findByType(GraalVMExtension.class);
         graal.getBinaries().configureEach(options ->
-                {
-                    options.resources(rsrc -> rsrc.autodetection(inf -> {
-                        inf.getEnabled().convention(true);
-                        inf.getIgnoreExistingResourcesConfigFile().convention(true);
-                        inf.getRestrictToProjectDependencies().convention(true);
-                    }));
-                    Provider<String> richOutput = project.getProviders().systemProperty(RICH_OUTPUT_PROPERTY);
-                    if (richOutput.isPresent()) {
-                        options.getRichOutput().convention(richOutput.map(Boolean::parseBoolean));
-                    }
+            {
+                options.resources(rsrc -> rsrc.autodetection(inf -> {
+                    inf.getEnabled().convention(true);
+                    inf.getIgnoreExistingResourcesConfigFile().convention(true);
+                    inf.getRestrictToProjectDependencies().convention(true);
+                }));
+                Provider<String> richOutput = project.getProviders().systemProperty(RICH_OUTPUT_PROPERTY);
+                if (richOutput.isPresent()) {
+                    options.getRichOutput().convention(richOutput.map(Boolean::parseBoolean));
                 }
+            }
         );
         TaskContainer tasks = project.getTasks();
         project.getPluginManager().withPlugin("application", plugin ->
@@ -87,32 +87,32 @@ public class MicronautGraalPlugin implements Plugin<Project> {
                 if (mr.isLambdaProvided()) {
                     DependencySet implementation = project.getConfigurations().getByName("implementation").getDependencies();
                     boolean isAwsApp = implementation.stream()
-                            .noneMatch(dependency -> Objects.equals(dependency.getGroup(), "io.micronaut.aws") && dependency.getName().equals("micronaut-function-aws"));
+                        .noneMatch(dependency -> Objects.equals(dependency.getGroup(), "io.micronaut.aws") && dependency.getName().equals("micronaut-function-aws"));
 
                     if (isAwsApp) {
                         var nativeLambdaExtension = findMicronautExtension(project).getExtensions().getByType(NativeLambdaExtension.class);
                         nativeImageTask.getOptions().get().getMainClass().set(nativeLambdaExtension.getLambdaRuntimeClassName());
                     }
                 }
-        }));
+            }));
     }
 
     private void workaroundForResourcesDirectoryMissing(Project project) {
         project.getPluginManager().withPlugin("java", plugin ->
-                project.afterEvaluate(unused -> {
-                    // Workaround for https://github.com/graalvm/native-build-tools/issues/175
-                    // and https://github.com/micronaut-projects/micronaut-gradle-plugin/issues/306
-                    project.getTasks().withType(ProcessResources.class).configureEach(task -> {
-                        // yes we do this at config time, because otherwise the workaround
-                        // simply doesn't work because there would be no inputs so that
-                        // task would never be executed. So yes, this is incorrect because
-                        // the destination dir _could_ be changed after this is executed
-                        File destinationDir = task.getDestinationDir();
-                        if (destinationDir != null) {
-                            destinationDir.mkdirs();
-                        }
-                    });
-                })
+            project.afterEvaluate(unused -> {
+                // Workaround for https://github.com/graalvm/native-build-tools/issues/175
+                // and https://github.com/micronaut-projects/micronaut-gradle-plugin/issues/306
+                project.getTasks().withType(ProcessResources.class).configureEach(task -> {
+                    // yes we do this at config time, because otherwise the workaround
+                    // simply doesn't work because there would be no inputs so that
+                    // task would never be executed. So yes, this is incorrect because
+                    // the destination dir _could_ be changed after this is executed
+                    File destinationDir = task.getDestinationDir();
+                    if (destinationDir != null) {
+                        destinationDir.mkdirs();
+                    }
+                });
+            })
         );
     }
 
@@ -137,24 +137,24 @@ public class MicronautGraalPlugin implements Plugin<Project> {
         });
 
         addGraalVMAnnotationProcessorDependency(project,
-                sourceSets.stream()
-                        .filter(sourceSet -> SOURCE_SETS.contains(sourceSet.getName()))
-                        .toList()
+            sourceSets.stream()
+                .filter(sourceSet -> SOURCE_SETS.contains(sourceSet.getName()))
+                .toList()
         );
     }
 
     private static void addGraalVMAnnotationProcessorDependency(Project project, Iterable<SourceSet> sourceSets) {
         for (SourceSet sourceSet : sourceSets) {
             new AutomaticDependency(sourceSet.getAnnotationProcessorConfigurationName(),
-                    "io.micronaut:micronaut-graal",
-                    Optional.of(CORE_VERSION_PROPERTY)).applyTo(project);
+                "io.micronaut:micronaut-graal",
+                Optional.of(CORE_VERSION_PROPERTY)).applyTo(project);
         }
     }
 
     public static List<String> getGraalVMBuilderExports() {
         return GRAALVM_MODULE_EXPORTS.stream()
-                .map(module -> "--add-exports=" + module + "=ALL-UNNAMED")
-                .toList();
+            .map(module -> "--add-exports=" + module + "=ALL-UNNAMED")
+            .toList();
     }
 
     /**

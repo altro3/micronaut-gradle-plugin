@@ -73,7 +73,7 @@ For example, the `minimal` plugins can be used to reduce the number of tasks, fo
 |
 
 |https://plugins.gradle.org/plugin/io.micronaut.test-resources-consumer[`io.micronaut.test-resources-consumer`]
-|Provides ability to use test resources of other projects of multiproject builds
+|Provides ability to use test resources of other projects of multi-project builds
 |
 
 |https://plugins.gradle.org/plugin/io.micronaut.openapi[`io.micronaut.openapi`]
@@ -1419,7 +1419,7 @@ In particular, it makes use of https://testcontainers.org/[Testcontainers] to au
 Test resources are handled by a "test resources service" which is a server accepting requests for test resources, which <<sec:test-resources-lifecycle,lifecycle>> is handled by the Gradle plugin.
 A test resources request is, to simplify, a request to resolve a _missing configuration property_.
 For example, if the `kafka.bootstrap-servers` property isn't set, Micronaut will query the test resources service for the value of this property.
-This will trigger the creaton of a Kafka test container, and the service will answer with the URI to the bootstrap server.
+This will trigger the creation of a Kafka test container, and the service will answer with the URI to the bootstrap server.
 
 [NOTE]
 ====
@@ -1671,7 +1671,7 @@ If you interrupt the continuous build, the test resources will be stopped.
 [sec:keepalive-test-resources]
 === Keeping test resources alive
 
-We have seen that running in continous mode allows keeping test resources alive as long as a continous build runs.
+We have seen that running in continuous mode allows keeping test resources alive as long as a continuous build runs.
 However, what if you want to start the test resources service in the background, and keep it alive for multiple, independent builds (different invocations on the command line for example) ?
 
 You can achieve this behavior by running the `startTestResourcesService` command:

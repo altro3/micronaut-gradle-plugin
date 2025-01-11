@@ -58,7 +58,7 @@ public abstract class MergeServiceFiles extends DefaultTask {
         getFileOperations().delete(outputDir);
         outputDir.mkdirs();
         Map<String, List<File>> perService = serviceFiles.stream()
-                .collect(Collectors.groupingBy(File::getName));
+            .collect(Collectors.groupingBy(File::getName));
         for (Map.Entry<String, List<File>> entry : perService.entrySet()) {
             String serviceType = entry.getKey();
             List<File> files = entry.getValue();

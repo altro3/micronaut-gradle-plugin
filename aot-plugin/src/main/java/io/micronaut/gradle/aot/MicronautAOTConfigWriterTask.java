@@ -49,7 +49,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.List;
@@ -92,6 +91,7 @@ public abstract class MicronautAOTConfigWriterTask extends DefaultTask {
             }
         }
     }
+
     private static void stringParameter(Properties props, String parameter, Property<String> provider) {
         if (provider.isPresent()) {
             props.setProperty(parameter, provider.get());

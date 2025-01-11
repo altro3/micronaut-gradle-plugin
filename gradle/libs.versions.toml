@@ -19,10 +19,18 @@ micronaut-testresources = "2.7.2"
 micronaut-openapi = "6.13.2"
 
 [libraries]
-# Core
+# Micronaut
 micronaut-platform = { module = 'io.micronaut.platform:micronaut-platform', version.ref = 'micronaut-platform' }
 
-dockerPlug = { module = "com.bmuschko:gradle-docker-plugin", version.ref = "docker" }
+micronaut-aot-api = { module = "io.micronaut.aot:micronaut-aot-api", version.ref = "micronaut-aot" }
+micronaut-aot-core = { module = "io.micronaut.aot:micronaut-aot-core", version.ref = "micronaut-aot" }
+micronaut-aot-std = { module = "io.micronaut.aot:micronaut-aot-std-optimizers", version.ref = "micronaut-aot" }
+micronaut-aot-cli = { module = "io.micronaut.aot:micronaut-aot-cli", version.ref = "micronaut-aot" }
+
+micronaut-openapi-generator = { module = "io.micronaut.openapi:micronaut-openapi-generator", version.ref = "micronaut-openapi" }
+micronaut-testresources = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version.ref = "micronaut-testresources" }
+
+dockerPlugin = { module = "com.bmuschko:gradle-docker-plugin", version.ref = "docker" }
 diffplugPlugin = { module = "com.diffplug.gradle:goomph", version.ref = "diffplug" }
 shadowPlugin = { module = "com.github.johnrengelman:shadow", version.ref = "shadow" }
 graalvmPlugin = { module = "org.graalvm.buildtools:native-gradle-plugin", version.ref = "graalvmPlugin" }
@@ -35,15 +43,6 @@ groovy-core = { module = "org.codehaus.groovy:groovy", version.ref = "groovy" }
 spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
 spock-junit4 = { module = "org.spockframework:spock-junit4", version.ref = "spock" }
 log4j2-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j2" }
-
-micronaut-aot-api = { module = "io.micronaut.aot:micronaut-aot-api", version.ref = "micronaut-aot" }
-micronaut-aot-core = { module = "io.micronaut.aot:micronaut-aot-core", version.ref = "micronaut-aot" }
-micronaut-aot-std = { module = "io.micronaut.aot:micronaut-aot-std-optimizers", version.ref = "micronaut-aot" }
-micronaut-aot-cli = { module = "io.micronaut.aot:micronaut-aot-cli", version.ref = "micronaut-aot" }
-
-micronaut-openapi-generator = { module = "io.micronaut.openapi:micronaut-openapi-generator", version.ref = "micronaut-openapi" }
-
-micronaut-testresources = { module = "io.micronaut.testresources:micronaut-test-resources-build-tools", version.ref = "micronaut-testresources" }
 
 mockserver-netty = { module = "org.mock-server:mockserver-netty", version.ref = "mockserver" }
 mockserver-client = { module = "org.mock-server:mockserver-client-java", version.ref = "mockserver" }

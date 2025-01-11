@@ -311,8 +311,8 @@ public class MicronautDockerPlugin implements Plugin<Project> {
             task.setGroup(BasePlugin.BUILD_GROUP);
             task.setDescription("Builds a Native Docker Image using GraalVM (image " + imageName + ")");
             task.getInputs().files(prepareContext)
-                    .withPropertyName("preparedDockerContext")
-                    .withPathSensitivity(PathSensitivity.RELATIVE);
+                .withPropertyName("preparedDockerContext")
+                .withPathSensitivity(PathSensitivity.RELATIVE);
             task.getDockerFile().convention(dockerFileTask.flatMap(Dockerfile::getDestFile));
             task.getImages().set(Collections.singletonList(project.getName()));
             task.dependsOn(buildLayersTask);

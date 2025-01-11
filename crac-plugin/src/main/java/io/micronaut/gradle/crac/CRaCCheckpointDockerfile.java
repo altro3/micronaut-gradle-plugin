@@ -103,8 +103,8 @@ public abstract class CRaCCheckpointDockerfile extends Dockerfile {
             try {
                 Path source = getCustomCheckpointDockerfile().get().getAsFile().toPath();
                 Files.copy(
-                        source,
-                        getDestFile().get().getAsFile().toPath()
+                    source,
+                    getDestFile().get().getAsFile().toPath()
                 );
                 getProject().getLogger().lifecycle("Checkpoint Dockerfile copied from {} to {}", source, getDestFile().get().getAsFile().getAbsolutePath());
                 return;
@@ -170,12 +170,12 @@ public abstract class CRaCCheckpointDockerfile extends Dockerfile {
         task.workingDir(workDir);
         task.instruction("# Add required libraries");
         task.runCommand("""
-            apt-get update && apt-get install -y \\
-                    curl \\
-                    jq \\
-                    libnl-3-200 \\
-                && rm -rf /var/lib/apt/lists/*
-        """);
+                apt-get update && apt-get install -y \\
+                        curl \\
+                        jq \\
+                        libnl-3-200 \\
+                    && rm -rf /var/lib/apt/lists/*
+            """);
         task.instruction("# Install latest CRaC OpenJDK");
 
         // Limit the architecture, Azul doesn't support x86_64 https://api.azul.com/metadata/v1/docs/swagger
@@ -187,25 +187,25 @@ public abstract class CRaCCheckpointDockerfile extends Dockerfile {
 
         String url = getUrl(javaVersion, task.getOs().get(), arch);
         task.runCommand("release_id=$(curl -s \"" + url + "\" -H \"accept: application/json\" | jq -r '.[0] | .package_uuid') \\\n" +
-                "    && if [ \"$release_id\" = \"null\" ]; then \\\n" +
-                "           echo \"" + errorMessage + "\"; \\\n" +
-                "           exit 1; \\\n" +
-                "       fi \\\n" +
-                "    && details=$(curl -s \"https://api.azul.com/metadata/v1/zulu/packages/$release_id\" -H \"accept: application/json\") \\\n" +
-                "    && name=$(echo \"$details\" | jq -r '.name') \\\n" +
-                "    && url=$(echo \"$details\" | jq -r '.download_url') \\\n" +
-                "    && hash=$(echo \"$details\" | jq -r '.sha256_hash') \\\n" +
-                "    && echo \"Downloading $name from $url\" \\\n" +
-                "    && curl -LJOH 'Accept: application/octet-stream' \"$url\" >&2 \\\n" +
-                "    && file_sha=$(sha256sum -b \"$name\" | cut -d' ' -f 1) \\\n" +
-                "    && if [ \"$file_sha\" != \"$hash\" ]; then \\\n" +
-                "           echo \"SHA256 hash mismatch: $file_sha != $hash\"; \\\n" +
-                "           exit 1; \\\n" +
-                "       fi \\\n" +
-                "    && echo \"SHA256 hash matches: $file_sha == $hash\" \\\n" +
-                "    && tar xzf \"$name\" \\\n" +
-                "    && mv ${name%%.tar.gz} /azul-crac-jdk \\\n" +
-                "    && rm \"$name\"");
+            "    && if [ \"$release_id\" = \"null\" ]; then \\\n" +
+            "           echo \"" + errorMessage + "\"; \\\n" +
+            "           exit 1; \\\n" +
+            "       fi \\\n" +
+            "    && details=$(curl -s \"https://api.azul.com/metadata/v1/zulu/packages/$release_id\" -H \"accept: application/json\") \\\n" +
+            "    && name=$(echo \"$details\" | jq -r '.name') \\\n" +
+            "    && url=$(echo \"$details\" | jq -r '.download_url') \\\n" +
+            "    && hash=$(echo \"$details\" | jq -r '.sha256_hash') \\\n" +
+            "    && echo \"Downloading $name from $url\" \\\n" +
+            "    && curl -LJOH 'Accept: application/octet-stream' \"$url\" >&2 \\\n" +
+            "    && file_sha=$(sha256sum -b \"$name\" | cut -d' ' -f 1) \\\n" +
+            "    && if [ \"$file_sha\" != \"$hash\" ]; then \\\n" +
+            "           echo \"SHA256 hash mismatch: $file_sha != $hash\"; \\\n" +
+            "           exit 1; \\\n" +
+            "       fi \\\n" +
+            "    && echo \"SHA256 hash matches: $file_sha == $hash\" \\\n" +
+            "    && tar xzf \"$name\" \\\n" +
+            "    && mv ${name%%.tar.gz} /azul-crac-jdk \\\n" +
+            "    && rm \"$name\"");
 
         task.instruction("# Copy layers");
         MicronautDockerfile.setupResources(task, task.getLayers().get(), workDir);

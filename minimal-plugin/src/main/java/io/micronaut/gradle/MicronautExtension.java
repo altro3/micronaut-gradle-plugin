@@ -50,11 +50,11 @@ public abstract class MicronautExtension implements ExtensionAware {
         this.processing = objectFactory.newInstance(AnnotationProcessing.class, sourceSetConfigurer);
         this.version = objectFactory.property(String.class);
         this.enableNativeImage = objectFactory.property(Boolean.class)
-                                    .convention(true);
+            .convention(true);
         this.runtime = objectFactory.property(MicronautRuntime.class)
-                                    .convention(MicronautRuntime.NONE);
+            .convention(MicronautRuntime.NONE);
         this.testRuntime = objectFactory.property(MicronautTestRuntime.class)
-                                        .convention(MicronautTestRuntime.NONE);
+            .convention(MicronautTestRuntime.NONE);
         getImportMicronautPlatform().convention(true);
     }
 

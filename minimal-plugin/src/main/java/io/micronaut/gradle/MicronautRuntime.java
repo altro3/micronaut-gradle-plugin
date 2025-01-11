@@ -77,6 +77,7 @@ public enum MicronautRuntime {
     public boolean isLambda() {
         return this == LAMBDA_JAVA || isLambdaProvided();
     }
+
     public boolean isLambdaProvided() {
         return this == LAMBDA_PROVIDED;
     }

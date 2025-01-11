@@ -45,18 +45,18 @@ public final class TestResourcesGraalVM {
         })));
         ProviderFactory providers = project.getProviders();
         boolean includeClient = Boolean.TRUE.equals(providers
-                .systemProperty(ENABLED_PROPERTY_NAME)
-                .orElse(providers.gradleProperty(ENABLED_PROPERTY_NAME))
-                .map(s -> {
-                    if (s.isEmpty() || "true".equalsIgnoreCase(s)) {
-                        // if the property is set without value, consider it's true
-                        return "true";
-                    }
-                    return "false";
-                })
-                .orElse("false")
-                .map(Boolean::parseBoolean)
-                .getOrElse(false));
+            .systemProperty(ENABLED_PROPERTY_NAME)
+            .orElse(providers.gradleProperty(ENABLED_PROPERTY_NAME))
+            .map(s -> {
+                if (s.isEmpty() || "true".equalsIgnoreCase(s)) {
+                    // if the property is set without value, consider it's true
+                    return "true";
+                }
+                return "false";
+            })
+            .orElse("false")
+            .map(Boolean::parseBoolean)
+            .getOrElse(false));
         if (includeClient) {
             Configuration runtimeClasspath = project.getConfigurations().getByName("runtimeOnly");
             runtimeClasspath.extendsFrom(client);

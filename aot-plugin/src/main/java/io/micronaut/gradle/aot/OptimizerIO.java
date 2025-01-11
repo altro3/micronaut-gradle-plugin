@@ -42,7 +42,7 @@ public interface OptimizerIO {
         NATIVE;
 
         public String getSimpleName() {
-            return name().toLowerCase(Locale.US);
+            return name().toLowerCase(Locale.ENGLISH);
         }
 
         public String getCapitalizedName() {

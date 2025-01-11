@@ -168,7 +168,7 @@ public class MicronautCRaCPlugin implements Plugin<Project> {
                 task.getDockerFile().set(f);
             } else {
                 task.getDockerFile()
-                        .convention(dockerFileTask.flatMap(Dockerfile::getDestFile));
+                    .convention(dockerFileTask.flatMap(Dockerfile::getDestFile));
             }
             task.getInputDir().set(dockerFileTask.flatMap(Dockerfile::getDestDir));
             task.getImages().set(Collections.singletonList(createCheckpointImageName(project)));
@@ -240,8 +240,8 @@ public class MicronautCRaCPlugin implements Plugin<Project> {
     ) {
 
         Optional<TaskProvider<CRaCCheckpointDockerfile>> getCheckpointDockerBuild() {
-                return Optional.ofNullable(checkpointDockerBuild);
-            }
+            return Optional.ofNullable(checkpointDockerBuild);
+        }
     }
 
     private Optional<TaskProvider<CRaCFinalDockerfile>> configureFinalDockerBuild(Project project,
@@ -278,7 +278,7 @@ public class MicronautCRaCPlugin implements Plugin<Project> {
                 task.getDockerFile().set(f);
             } else {
                 task.getDockerFile()
-                        .convention(dockerFileTask.flatMap(Dockerfile::getDestFile));
+                    .convention(dockerFileTask.flatMap(Dockerfile::getDestFile));
             }
             task.getImages().set(Collections.singletonList(project.getName()));
             task.getInputDir().set(dockerFileTask.flatMap(Dockerfile::getDestDir));

@@ -42,7 +42,7 @@ public class Dependencies {
 
     public Map<String, List<AutomaticDependency>> toMap() {
         return dependencies.stream()
-                .collect(groupingBy(AutomaticDependency::configuration));
+            .collect(groupingBy(AutomaticDependency::configuration));
     }
 
     public static Builder builder() {
@@ -64,7 +64,7 @@ public class Dependencies {
         public Builder runtimeOnly(String coordinates) {
             return runtimeOnly(coordinates, null);
         }
-        
+
         public Builder runtimeOnly(String coordinates, ConfigurableVersionProperty version) {
             this.dependencies.add(new AutomaticDependency(JavaPlugin.RUNTIME_ONLY_CONFIGURATION_NAME, coordinates, Optional.ofNullable(version)));
             return this;
@@ -73,7 +73,7 @@ public class Dependencies {
         public Builder developmentOnly(String coordinates) {
             return developmentOnly(coordinates, null);
         }
-        
+
         public Builder developmentOnly(String coordinates, ConfigurableVersionProperty version) {
             this.dependencies.add(new AutomaticDependency(DEVELOPMENT_ONLY, coordinates, Optional.ofNullable(version)));
             return this;
@@ -82,7 +82,7 @@ public class Dependencies {
         public Builder implementation(String coordinates) {
             return implementation(coordinates, null);
         }
-        
+
         public Builder implementation(String coordinates, ConfigurableVersionProperty version) {
             this.dependencies.add(new AutomaticDependency(JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME, coordinates, Optional.ofNullable(version)));
             return this;
@@ -91,7 +91,7 @@ public class Dependencies {
         public Builder testImplementation(String coordinates) {
             return testImplementation(coordinates, null);
         }
-        
+
         public Builder testImplementation(String coordinates, ConfigurableVersionProperty version) {
             this.dependencies.add(new AutomaticDependency(JavaPlugin.TEST_IMPLEMENTATION_CONFIGURATION_NAME, coordinates, Optional.ofNullable(version)));
             return this;

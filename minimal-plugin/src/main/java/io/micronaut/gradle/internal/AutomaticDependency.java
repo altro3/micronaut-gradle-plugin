@@ -38,9 +38,9 @@ import java.util.Set;
  * to override the default version
  */
 public record AutomaticDependency(
-        String configuration,
-        String coordinates,
-        Optional<ConfigurableVersionProperty> versionProperty
+    String configuration,
+    String coordinates,
+    Optional<ConfigurableVersionProperty> versionProperty
 ) {
 
     public void applyTo(Project p) {

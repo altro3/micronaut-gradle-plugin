@@ -36,6 +36,6 @@ public interface MicronautDockerImage extends Named {
         return getLayers().map(layers -> layers.stream()
                 .filter(layer -> layer.getRuntimeKind().get().isCompatibleWith(runtimeKind))
                 .toList())
-                .get();
+            .get();
     }
 }
